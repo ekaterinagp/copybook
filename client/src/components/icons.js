@@ -4,7 +4,7 @@ export function homeIcon() {
   return (
     <svg
       viewBox="0 0 28 28"
-      class="a8c37x1j ms05siws hwsy1cff b7h9ocf4 aaxa7vy3"
+      className="a8c37x1j ms05siws hwsy1cff b7h9ocf4 aaxa7vy3"
       height="35"
       width="35"
     >

@@ -7,7 +7,7 @@ import Profile from "../containers/Profile";
 import { Route, NavLink, Redirect } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { GiElephant } from "react-icons/gi";
-import { MdSearch } from "react-icons/md";
+import { MdSearch, MdArrowDropDownCircle } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import profile from "../img/image.jpg";
 import {
@@ -68,13 +68,19 @@ export default function NavBar() {
           </div>
         </div>
         <div className="right">
-          <div>
+          <div className="img-container">
             <NavLink to="/profile">
               <img className="profile-img" src={profile} alt="Profile" />
             </NavLink>
           </div>
 
-          <div>Ekaterina</div>
+          <div className="profile-name">
+            Ekaterina{" "}
+            <div className="add">
+              <AiOutlinePlusCircle />
+            </div>
+          </div>
+
           <div>
             <div className="messages">{messageIcon()}</div>
             <div className="chat-counter">1</div>
@@ -84,9 +90,7 @@ export default function NavBar() {
             <div className="notification-counter">1</div>
           </div>
           {/* <div>
-            <div className="add">
-              <AiOutlinePlusCircle />
-            </div>
+            <MdArrowDropDownCircle />
           </div> */}
         </div>
       </div>

@@ -1,6 +1,6 @@
 .nav {
   display: grid;
-  grid-template-columns: 10fr 20fr 10fr;
+  grid-template-columns: 10fr 14fr 10fr;
   grid-gap: 2rem;
   position: fixed;
   top: 0px;
@@ -88,7 +88,7 @@ input {
 
 .right {
   display: grid;
-  grid-template-columns: 3fr 6fr 1fr 1fr 8fr;
+  grid-template-columns: 8fr 8fr 1fr 1fr 8fr;
   align-items: center;
   grid-gap: 2rem;
   align-items: center;
@@ -137,4 +137,19 @@ input {
 .profile-img {
   border-radius: 50%;
   width: 60px;
+}
+
+.profile-name {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.add svg {
+  width: 3em;
+  height: 1.5em;
+  color: black;
+}
+
+.img-container {
+  text-align: end;
 }
