@@ -1,0 +1,16 @@
+.nav {
+  background: #eee;
+  text-align: center;
+}
+.nav ul {
+  padding: 0;
+  list-style: none;
+  display: inline-block;
+  text-align: center;
+}
+.nav ul li {
+  display: inline-block;
+}
+.nav ul li a {
+  padding: 0 10px;
+}
