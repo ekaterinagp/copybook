@@ -1,6 +1,18 @@
 .nav {
-  background: #eee;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 10fr 20fr 10fr;
+  grid-gap: 2rem;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 5rem;
+  padding: 0px 2vw;
+  font-size: 1.5rem;
+  color: #555;
+  background: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+  z-index: 1;
 }
 .nav ul {
   padding: 0;
@@ -13,4 +25,116 @@
 }
 .nav ul li a {
   padding: 0 10px;
+}
+
+.active {
+  border-bottom: #1877f2 3px solid;
+}
+
+.logo {
+  text-align: start;
+  padding-left: 2em;
+  margin-top: -0.1em;
+}
+
+.left form > div > input {
+  padding-right: 1.8rem;
+  margin-bottom: 0.5em;
+}
+
+.left {
+  display: grid;
+  grid-template-columns: 4fr 10fr;
+  grid-gap: 1rem;
+  align-items: center;
+}
+nav div.left div.logo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  grid-gap: 0.5rem;
+  font-weight: 400;
+  color: #1da1f2;
+}
+
+.search-input {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+}
+.search-input svg {
+  font-size: 1.5em;
+  /* padding-left: 20px; */
+}
+
+input {
+  width: 100%;
+  height: 2.5rem;
+  padding: 0px 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  outline: none;
+}
+
+.middle {
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 2fr;
+  justify-items: center;
+  /* grid-gap: 10px; */
+  align-items: center;
+}
+
+.right {
+  display: grid;
+  grid-template-columns: 3fr 6fr 1fr 1fr 8fr;
+  align-items: center;
+  grid-gap: 2rem;
+  align-items: center;
+}
+.right > div {
+  position: relative;
+}
+.right > div:last-child {
+  text-align: right;
+}
+.chat-counter {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+
+  position: absolute;
+  top: -0.6rem;
+  right: -1rem;
+
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: white;
+  background: #f02849;
+  border-radius: 50%;
+}
+.notification-counter {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+
+  position: absolute;
+  top: -0.6rem;
+  right: -1rem;
+
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: white;
+  background: #f02849;
+  border-radius: 50%;
+}
+
+.profile-img {
+  border-radius: 50%;
+  width: 60px;
 }
