@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./start.css";
+import "./css/start.css";
 import { FaImages } from "react-icons/fa";
 import { GoSmiley } from "react-icons/go";
 import { MdLiveTv } from "react-icons/md";
@@ -79,8 +79,8 @@ export default function StartPage(props) {
     <div className="container-3-columns">
       <div
         className="main-left"
-        onMouseEnter={unblockGroups}
-        onMouseLeave={blockGroups}
+        // onMouseEnter={unblockGroups}
+        // onMouseLeave={blockGroups}
       >
         {groups
           ? groups.map((group, i) => (
@@ -153,8 +153,8 @@ export default function StartPage(props) {
       </div>
       <div
         className="main-right"
-        onMouseEnter={unblockGroups}
-        onMouseLeave={blockGroups}
+        // onMouseEnter={unblockGroups}
+        // onMouseLeave={blockGroups}
       >
         <div className="birthday-block">
           <h2>Birthdays</h2>

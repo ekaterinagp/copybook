@@ -1,0 +1,50 @@
+.watch-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+}
+
+.watch-left {
+  display: grid;
+  grid-template-rows: 1fr 5fr;
+  margin-top: 5rem;
+  position: fixed;
+  width: 15vw;
+  height: 100vh;
+  padding: 0px 1rem;
+  background-color: rgb(216, 216, 216);
+}
+
+.block-divider {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.formSearch {
+  display: flex;
+}
+
+.formSearch svg {
+  position: absolute;
+  margin-top: 10px;
+  padding-left: 2px;
+  font-size: 25px;
+  color: grey;
+}
+
+input::placeholder {
+  padding-left: 18px;
+}
+
+.watch-center {
+  position: absolute;
+  top: 5rem;
+  left: 25vw;
+  width: 50vw;
+  padding: 0 2rem;
+  overflow: scroll;
+}
+
+.popular {
+  display: grid;
+  grid-template-rows: auto;
+  grid-gap: 2rem;
+}
