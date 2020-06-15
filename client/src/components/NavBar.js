@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import StartPage from "../containers/StartPage";
 import Watch from "../containers/Watch";
 import Marketplace from "../containers/Marketplace";
 import Groups from "../containers/Groups";
 import Profile from "../containers/Profile";
-import { Route, NavLink, Redirect } from "react-router-dom";
+import { Route, NavLink, Redirect, Link } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { GiElephant } from "react-icons/gi";
 import { MdSearch, MdArrowDropDownCircle } from "react-icons/md";
@@ -22,14 +22,21 @@ import {
 import "./navbar.css";
 
 export default function NavBar() {
+  const [notifications, setNotifications] = useState(3);
+  const [messages, setMessages] = useState(1);
+  const [user, setUser] = useState({
+    name: "Ekaterina",
+  });
   return (
     <>
       <div className="nav">
         <div className="left">
           <IconContext.Provider value={{ color: "blue", size: "3em" }}>
-            <p className="logo">
-              <GiElephant />
-            </p>
+            <Link to="/home">
+              <p className="logo">
+                <GiElephant />
+              </p>
+            </Link>
           </IconContext.Provider>
           <div>
             <form>
@@ -75,7 +82,7 @@ export default function NavBar() {
           </div>
 
           <div className="profile-name">
-            Ekaterina{" "}
+            {user.name}
             <div className="add">
               <AiOutlinePlusCircle />
             </div>
@@ -83,11 +90,13 @@ export default function NavBar() {
 
           <div>
             <div className="messages">{messageIcon()}</div>
-            <div className="chat-counter">1</div>
+            <div className="chat-counter">{messages ? messages : null}</div>
           </div>
           <div>
             <div className="notification">{notificationIcon()}</div>
-            <div className="notification-counter">1</div>
+            <div className="notification-counter">
+              {notifications ? notifications : null}
+            </div>
           </div>
           {/* <div>
             <MdArrowDropDownCircle />
@@ -95,7 +104,11 @@ export default function NavBar() {
         </div>
       </div>
       <div className="App-intro">
-        <Route path="/home" exact component={StartPage} />
+        <Route
+          path="/home"
+          exact
+          component={() => <StartPage user={user.name} />}
+        />
         <Route path="/watch" component={Watch} />
         <Route path="/marketplace" component={Marketplace} />
         <Route path="/groups" component={Groups} />
