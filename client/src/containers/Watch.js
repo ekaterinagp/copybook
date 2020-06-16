@@ -63,29 +63,43 @@ export default function Watch() {
   };
 
   const getValue = (e) => {
+    if (e.target.value == "") {
+      setTerm("");
+    }
     const debouncer = new Debouncer();
-    e.preventDefault();
+    // e.preventDefault();
     console.log(e.target.value);
-    let term = e.target.value;
-    setTerm(term);
-    debouncer.call(1000, () => {
-      try {
-        setLoading(true);
-        fetchSearchVideo(term);
-
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    });
+    if (e.target.value) {
+      console.log("there is a value");
+      let term = e.target.value;
+      setTerm(term);
+      debouncer.call(1000, () => {
+        try {
+          fetchSearchVideo(term);
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    } else {
+      console.log("no value!");
+      setSearchedVideo([]);
+    }
   };
 
   useEffect(() => {
-    fetchPopularVideos();
-    // fetchSearchVideo();
-    return () => {
-      abortController.abort();
+    const fetchPopularVideos = async () => {
+      const API_KEY = "16795333-601a6aef6f988f75f286fd11f";
+      let URL = "https://pixabay.com/api/videos/?key=" + API_KEY;
+      setLoading(true);
+
+      const videos = await axios
+        .get(URL)
+        .catch((error) => console.log(error.response.data));
+      console.log(videos.data.hits);
+      setPopularVideos(videos.data.hits);
+      setLoading(false);
     };
+    fetchPopularVideos();
   }, []);
 
   return (
@@ -121,7 +135,7 @@ export default function Watch() {
         </div>
       </div>
       <div className="watch-center">
-        {searchedVideo.length ? (
+        {searchedVideo.length && term !== "" ? (
           <>
             <h2>Search results for {term} </h2>
             {searchedVideo.map((video, i) => (
