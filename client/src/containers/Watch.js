@@ -7,6 +7,7 @@ import "./css/watch.css";
 import { IconContext } from "react-icons";
 import Debouncer from "../components/Debouncer";
 import Contacts from "../components/Contacts";
+import Search from "../components/Search";
 
 export default function Watch() {
   const [savedVideos, setSavedVideos] = useState([
@@ -108,14 +109,7 @@ export default function Watch() {
       <div className="watch-left">
         <div>
           <h2>Watch</h2>{" "}
-          <form className="formSearch">
-            <MdSearch />
-            <input
-              type="text"
-              placeholder={`Search video `}
-              onChange={getValue}
-            />
-          </form>
+          <Search placeholder={"Search video"} getValue={getValue} />
         </div>
         <div className="block-divider">
           <h3>Saved videos</h3>

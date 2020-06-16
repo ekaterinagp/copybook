@@ -1,0 +1,20 @@
+.market-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+}
+
+.market-left {
+  display: grid;
+  grid-template-rows: 1fr 5fr;
+  margin-top: 5rem;
+  position: fixed;
+  width: 15vw;
+  height: 100vh;
+  padding: 0px 1rem;
+  background-color: rgb(216, 216, 216);
+}
+
+.saved-items img {
+  width: 200px;
+  height: 150px;
+}
