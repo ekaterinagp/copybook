@@ -31,7 +31,11 @@
 }
 
 input::placeholder {
-  padding-left: 18px;
+  padding-left: 10px;
+}
+
+.watch-left input {
+  text-indent: 12px;
 }
 
 .watch-center {
@@ -47,4 +51,53 @@ input::placeholder {
   display: grid;
   grid-template-rows: auto;
   grid-gap: 2rem;
+}
+
+.single-video {
+  display: grid;
+  grid-gap: 1rem;
+  width: 100%;
+  padding: 1rem;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+}
+
+.single-video video {
+  justify-self: center;
+}
+
+.watch-left h2,
+.watch-center h2 {
+  padding: 1em;
+}
+
+.tooltip {
+  position: relative;
+  justify-self: end;
+  /* display: inline-block; */
+  /* border-bottom: 1px dotted black; */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgb(197, 195, 195);
+  color: rgb(57, 99, 69);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.video-top {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
 }
