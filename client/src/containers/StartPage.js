@@ -5,6 +5,7 @@ import { GoSmiley } from "react-icons/go";
 import { MdLiveTv } from "react-icons/md";
 import { AiOutlineGift } from "react-icons/ai";
 import { IconContext } from "react-icons";
+import Contacts from "../components/Contacts";
 
 export default function StartPage(props) {
   const [groups, setGroups] = useState([
@@ -47,23 +48,7 @@ export default function StartPage(props) {
       text: "text here about i am exhausted",
     },
   ]);
-  const [usersActive, setUsersActive] = useState([
-    {
-      name: "Bjarne Honey",
-      active: false,
-      img: "link",
-    },
-    {
-      name: "Hannah Beach",
-      active: true,
-      img: "link",
-    },
-    {
-      name: "Anna A",
-      active: true,
-      img: "link",
-    },
-  ]);
+
   const [birthday, setBirthday] = useState([
     {
       name: "Ben Benson",
@@ -171,7 +156,8 @@ export default function StartPage(props) {
         </div>
         <div className="friends-activity">
           <h2>Contacts</h2>
-          {usersActive.map((user, i) => (
+          <Contacts />
+          {/* {usersActive.map((user, i) => (
             <div className="mini-profile-contacts" key={i}>
               <div className="grid-img-active">
                 <img src="https://source.unsplash.com/random/50x55" alt="" />
@@ -185,7 +171,7 @@ export default function StartPage(props) {
                 <div>{user.name}</div>
               </div>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

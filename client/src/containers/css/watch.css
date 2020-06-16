@@ -47,6 +47,21 @@ input::placeholder {
   overflow: scroll;
 }
 
+.watch-right {
+  position: fixed;
+  top: 40rem;
+  left: 75vw;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 0.5rem;
+  width: 100%;
+
+  /* height: calc(100vh - 5.5rem); */
+
+  overflow-y: scroll;
+  z-index: 1;
+}
+
 .popular {
   display: grid;
   grid-template-rows: auto;

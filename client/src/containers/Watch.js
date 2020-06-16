@@ -6,6 +6,7 @@ import { GiSaveArrow } from "react-icons/gi";
 import "./css/watch.css";
 import { IconContext } from "react-icons";
 import Debouncer from "../components/Debouncer";
+import Contacts from "../components/Contacts";
 
 export default function Watch() {
   const [savedVideos, setSavedVideos] = useState([
@@ -199,7 +200,9 @@ export default function Watch() {
           </>
         )}
       </div>
-      <div className="watch-right"></div>
+      <div className="watch-right">
+        <Contacts />
+      </div>
     </div>
   );
 }
