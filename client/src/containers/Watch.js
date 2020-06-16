@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react";
-import pexels from "../components/pexel";
+
 import axios from "axios";
 import { MdSearch } from "react-icons/md";
 import { GiSaveArrow } from "react-icons/gi";
 import "./css/watch.css";
 import { IconContext } from "react-icons";
+import Debouncer from "../components/Debouncer";
 
 export default function Watch() {
   const [savedVideos, setSavedVideos] = useState([
     {
       // title: "Nature",
       link:
-        "https://player.vimeo.com/external/291648067.sd.mp4?s=7f9ee1f8ec1e5376027e4a6d1d05d5738b2fbb29&profile_id=164&oauth2_token_id=57447761",
+        "https://player.vimeo.com/external/396036988.hd.mp4?s=d409153a1984fc0bd388cdc8d0a3a94eed888de3&profile_id=170",
     },
     {
       // title: "Video2",
       link:
-        "https://player.vimeo.com/external/314181352.sd.mp4?s=d2cd7a37f6250cd543e6d13209730b4bcf242130&profile_id=164&oauth2_token_id=57447761",
+        "https://player.vimeo.com/external/402679728.hd.mp4?s=d24e05f20b7e859ad5bc7adc30c707e689c01078&profile_id=170",
     },
   ]);
   const [loading, setLoading] = useState(true);
   const [popularVideos, setPopularVideos] = useState([]);
+  const [searchedVideo, setSearchedVideo] = useState([]);
+  const [term, setTerm] = useState();
 
   const saveVideo = (link) => {
     console.log(link);
@@ -32,19 +35,19 @@ export default function Watch() {
   const abortController = new AbortController();
 
   const fetchPopularVideos = async () => {
+    const API_KEY = "16795333-601a6aef6f988f75f286fd11f";
+    let URL = "https://pixabay.com/api/videos/?key=" + API_KEY;
     setLoading(true);
-    const videos = await pexels
-      .get(`/videos/popular`, {
-        signal: abortController.signal,
-      })
+
+    const videos = await axios
+      .get(URL)
       .catch((error) => console.log(error.response.data));
-    console.log(videos.data.videos);
-    setPopularVideos(videos.data.videos);
+    console.log(videos.data.hits);
+    setPopularVideos(videos.data.hits);
     setLoading(false);
   };
 
   const fetchSearchVideo = async (term) => {
-    setLoading(true);
     const API_KEY = "16795333-601a6aef6f988f75f286fd11f";
     // let term = "Nature";
     let URL =
@@ -54,13 +57,32 @@ export default function Watch() {
       encodeURIComponent(term);
     const videos = await axios.get(URL);
     // .catch((error) => console.log(error.response.data));
-    console.log(videos);
-    setLoading(false);
+
+    console.log(videos.data.hits);
+    setSearchedVideo(videos.data.hits);
+  };
+
+  const getValue = (e) => {
+    const debouncer = new Debouncer();
+    e.preventDefault();
+    console.log(e.target.value);
+    let term = e.target.value;
+    setTerm(term);
+    debouncer.call(1000, () => {
+      try {
+        setLoading(true);
+        fetchSearchVideo(term);
+
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    });
   };
 
   useEffect(() => {
     fetchPopularVideos();
-    fetchSearchVideo();
+    // fetchSearchVideo();
     return () => {
       abortController.abort();
     };
@@ -73,7 +95,11 @@ export default function Watch() {
           <h2>Watch</h2>{" "}
           <form className="formSearch">
             <MdSearch />
-            <input type="text" placeholder={`Search video `} />
+            <input
+              type="text"
+              placeholder={`Search video `}
+              onChange={getValue}
+            />
           </form>
         </div>
         <div className="block-divider">
@@ -95,35 +121,69 @@ export default function Watch() {
         </div>
       </div>
       <div className="watch-center">
-        <h2>Popular videos for you</h2>
-        <div className="popular">
-          {popularVideos.length ? (
-            popularVideos.map((video, i) => (
+        {searchedVideo.length ? (
+          <>
+            <h2>Search results for {term} </h2>
+            {searchedVideo.map((video, i) => (
               <div className="single-video" key={i}>
                 <div className="video-top">
-                  <h3>Video by {video.user.name}</h3>{" "}
+                  <h3>
+                    {video.tags} by {video.user}
+                  </h3>{" "}
                   <IconContext.Provider
                     value={{ color: "lightgreen", size: "2em" }}
                   >
                     <div className="tooltip">
                       <GiSaveArrow
-                        onClick={() => saveVideo(video.video_files[0].link)}
+                        onClick={() => saveVideo(video.videos.medium.url)}
                       />
                       <span className="tooltiptext">Save video</span>
                     </div>
                   </IconContext.Provider>
                 </div>
                 {/* Save video
-                </button> */}
+           </button> */}
                 <video width="500" height="400" controls>
-                  <source src={video.video_files[0].link} type="video/mp4" />
+                  <source src={video.videos.medium.url} type="video/mp4" />
                 </video>
               </div>
-            ))
-          ) : (
-            <p>Loading...</p>
-          )}
-        </div>
+            ))}
+          </>
+        ) : (
+          <>
+            <h2>Popular videos for you</h2>
+            <div className="popular">
+              {popularVideos.length ? (
+                popularVideos.map((video, i) => (
+                  <div className="single-video" key={i}>
+                    <div className="video-top">
+                      <h3>
+                        {video.tags} by {video.user}
+                      </h3>{" "}
+                      <IconContext.Provider
+                        value={{ color: "lightgreen", size: "2em" }}
+                      >
+                        <div className="tooltip">
+                          <GiSaveArrow
+                            onClick={() => saveVideo(video.videos.medium.url)}
+                          />
+                          <span className="tooltiptext">Save video</span>
+                        </div>
+                      </IconContext.Provider>
+                    </div>
+                    {/* Save video
+                  </button> */}
+                    <video width="500" height="400" controls>
+                      <source src={video.videos.medium.url} type="video/mp4" />
+                    </video>
+                  </div>
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
+            </div>
+          </>
+        )}
       </div>
       <div className="watch-right"></div>
     </div>
