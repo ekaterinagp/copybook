@@ -8,14 +8,14 @@ export default function Marketplace() {
       title: "car",
       price: 200000,
       img:
-        "https://pixabay.com/get/5ee8d2414d50b10ff3d8992cc62e3077103cdde64e507440772c7ad2974fcc_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/09/02/08/32/cuba-1638594_960_720.jpg",
       contact: "A AA, 2345678",
     },
     {
       title: "dress",
       price: 200,
       img:
-        "https://pixabay.com/get/57e7d1464b55af14f1dc8460962931791c3adde6504c704c7c2d78d5914dcd59_640.jpg",
+        "https://cdn.pixabay.com/photo/2016/06/11/16/51/prom-1450373_960_720.jpg",
       contact: "B BB, 234533678",
     },
   ]);

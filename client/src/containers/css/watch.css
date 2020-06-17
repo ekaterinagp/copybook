@@ -47,6 +47,15 @@ input::placeholder {
   overflow: scroll;
 }
 
+.bottom-video {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.like-put {
+  justify-self: end;
+}
+
 .watch-right {
   position: fixed;
   top: 40rem;
@@ -115,4 +124,13 @@ input::placeholder {
 .video-top {
   display: grid;
   grid-template-columns: 3fr 1fr;
+}
+
+.icon-action {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+}
+
+.likes-put svg {
+  justify-self: end;
 }

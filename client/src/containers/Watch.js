@@ -3,6 +3,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { MdSearch } from "react-icons/md";
 import { GiSaveArrow } from "react-icons/gi";
+import { AiTwotoneLike } from "react-icons/ai";
+import { AiOutlineLike } from "react-icons/ai";
+import { FaRegCommentAlt } from "react-icons/fa";
+import { RiShareForwardLine } from "react-icons/ri";
 import "./css/watch.css";
 import { IconContext } from "react-icons";
 import Debouncer from "../components/Debouncer";
@@ -26,6 +30,7 @@ export default function Watch() {
   const [popularVideos, setPopularVideos] = useState([]);
   const [searchedVideo, setSearchedVideo] = useState([]);
   const [term, setTerm] = useState();
+  const [likes, setLikes] = useState(12);
 
   const saveVideo = (link) => {
     console.log(link);
@@ -45,6 +50,7 @@ export default function Watch() {
       .get(URL)
       .catch((error) => console.log(error.response.data));
     console.log(videos.data.hits);
+
     setPopularVideos(videos.data.hits);
     setLoading(false);
   };
@@ -103,6 +109,12 @@ export default function Watch() {
     };
     fetchPopularVideos();
   }, []);
+
+  const handelLikeClick = (e) => {
+    setLikes(likes + 1);
+    console.log(e.target.style);
+    e.target.style.fill = "blue";
+  };
 
   return (
     <div className="watch-container">
@@ -185,6 +197,38 @@ export default function Watch() {
                     <video width="500" height="400" controls>
                       <source src={video.videos.medium.url} type="video/mp4" />
                     </video>
+                    <div className="bottom-video">
+                      <div className="like icon-action">
+                        <IconContext.Provider value={{ size: "1.5em" }}>
+                          <p className="justify-end">Like </p>{" "}
+                          <AiOutlineLike onClick={handelLikeClick} />
+                        </IconContext.Provider>
+                      </div>
+                      <div className="comment icon-action">
+                        <IconContext.Provider value={{ size: "1.5em" }}>
+                          <p className="justify-end">Comment </p>{" "}
+                          <FaRegCommentAlt />
+                        </IconContext.Provider>
+                      </div>
+                      <div className="share icon-action">
+                        <IconContext.Provider value={{ size: "1.5em" }}>
+                          <p className="justify-end">Share </p>{" "}
+                          <RiShareForwardLine />
+                        </IconContext.Provider>
+                      </div>
+                      <div></div>
+                      <div className="likes-put icon-action">
+                        <IconContext.Provider
+                          value={{
+                            size: "1.5em",
+                            color: "blue",
+                          }}
+                        >
+                          <AiTwotoneLike /> <p> {likes ? likes : 0} </p>
+                        </IconContext.Provider>
+                      </div>
+                      <div className="comments-put">12 comments</div>
+                    </div>
                   </div>
                 ))
               ) : (
