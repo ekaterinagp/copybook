@@ -12,8 +12,29 @@ import { IconContext } from "react-icons";
 import Debouncer from "../components/Debouncer";
 import Contacts from "../components/Contacts";
 import Search from "../components/Search";
+import LikesComments from "../components/LikesComments";
 
 export default function Watch() {
+  const [comments, setComments] = useState([
+    {
+      id: 1,
+      created: "01-03-2019",
+      text: "Cool",
+      firstName: "A",
+      lastName: "AA",
+      img:
+        "https://cdn.pixabay.com/photo/2016/11/01/03/27/girl-1787357_960_720.jpg",
+    },
+    {
+      id: 2,
+      text: "I like it",
+      created: "05-03-2019",
+      firstName: "B",
+      lastName: "BB",
+      img:
+        "https://cdn.pixabay.com/photo/2016/07/18/20/33/elephant-1526709_960_720.jpg",
+    },
+  ]);
   const [savedVideos, setSavedVideos] = useState([
     {
       // title: "Nature",
@@ -197,38 +218,12 @@ export default function Watch() {
                     <video width="500" height="400" controls>
                       <source src={video.videos.medium.url} type="video/mp4" />
                     </video>
-                    <div className="bottom-video">
-                      <div className="like icon-action">
-                        <IconContext.Provider value={{ size: "1.5em" }}>
-                          <p className="justify-end">Like </p>{" "}
-                          <AiOutlineLike onClick={handelLikeClick} />
-                        </IconContext.Provider>
-                      </div>
-                      <div className="comment icon-action">
-                        <IconContext.Provider value={{ size: "1.5em" }}>
-                          <p className="justify-end">Comment </p>{" "}
-                          <FaRegCommentAlt />
-                        </IconContext.Provider>
-                      </div>
-                      <div className="share icon-action">
-                        <IconContext.Provider value={{ size: "1.5em" }}>
-                          <p className="justify-end">Share </p>{" "}
-                          <RiShareForwardLine />
-                        </IconContext.Provider>
-                      </div>
-                      <div></div>
-                      <div className="likes-put icon-action">
-                        <IconContext.Provider
-                          value={{
-                            size: "1.5em",
-                            color: "blue",
-                          }}
-                        >
-                          <AiTwotoneLike /> <p> {likes ? likes : 0} </p>
-                        </IconContext.Provider>
-                      </div>
-                      <div className="comments-put">12 comments</div>
-                    </div>
+
+                    <LikesComments
+                      handleClick={handelLikeClick}
+                      likes={likes}
+                      comments={comments}
+                    />
                   </div>
                 ))
               ) : (

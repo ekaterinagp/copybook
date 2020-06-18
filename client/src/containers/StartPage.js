@@ -6,8 +6,30 @@ import { MdLiveTv } from "react-icons/md";
 import { AiOutlineGift } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import Contacts from "../components/Contacts";
+import LikesComments from "../components/LikesComments";
+import Comments from "../components/Comments";
 
 export default function StartPage(props) {
+  const [comments, setComments] = useState([
+    {
+      id: 1,
+      created: "01-03-2019",
+      text: "Cool",
+      firstName: "A",
+      lastName: "AA",
+      img:
+        "https://cdn.pixabay.com/photo/2016/11/01/03/27/girl-1787357_960_720.jpg",
+    },
+    {
+      id: 2,
+      text: "I like it",
+      created: "05-03-2019",
+      firstName: "B",
+      lastName: "BB",
+      img:
+        "https://cdn.pixabay.com/photo/2016/07/18/20/33/elephant-1526709_960_720.jpg",
+    },
+  ]);
   const [groups, setGroups] = useState([
     {
       name: "Group1",
@@ -60,6 +82,14 @@ export default function StartPage(props) {
   const unblockGroups = () => {
     document.querySelector("body").style.overflowY = "scroll";
   };
+  const [likes, setLikes] = useState(2);
+
+  const handelLikeClick = (e) => {
+    setLikes(likes + 1);
+    console.log(e.target.style);
+    e.target.style.fill = "blue";
+  };
+
   return (
     <div className="container-3-columns">
       <div
@@ -131,6 +161,11 @@ export default function StartPage(props) {
                     </div>
                   </div>
                   <div>{post.text}</div>
+                  <LikesComments
+                    handleClick={handelLikeClick}
+                    likes={likes}
+                    comments={comments}
+                  />
                 </div>
               ))
             : null}

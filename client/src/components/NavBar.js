@@ -10,6 +10,7 @@ import { GiElephant } from "react-icons/gi";
 import { MdSearch, MdArrowDropDownCircle } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import profile from "../img/image.jpg";
+import SinglePostMarket from "../containers/SinglePostMarket";
 import {
   homeIcon,
   watchIcon,
@@ -113,6 +114,7 @@ export default function NavBar() {
         <Route path="/marketplace" component={Marketplace} />
         <Route path="/groups" component={Groups} />
         <Route path="/profile" component={Profile} />
+        <Route exact path={`/post/:postId`} component={SinglePostMarket} />
         <Redirect to="/home" />
       </div>
     </>

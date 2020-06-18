@@ -5,7 +5,7 @@
 
 .market-left {
   display: grid;
-  grid-template-rows: 1fr 5fr;
+  grid-template-rows: 1fr 5fr 2fr;
   margin-top: 5rem;
   position: fixed;
   width: 15vw;
@@ -17,4 +17,64 @@
 .saved-items img {
   width: 200px;
   height: 150px;
+}
+
+.market-items-container {
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+  grid-template-rows: auto;
+  grid-gap: 2rem;
+}
+
+.img-div {
+  width: 200px;
+  height: 300px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.market-center {
+  position: absolute;
+  top: 5rem;
+  left: 25vw;
+  width: 50vw;
+  padding: 0 2rem;
+}
+
+.single-market-post {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.market-items-container a,
+p {
+  text-decoration: none;
+  color: black;
+}
+
+.single-post-market {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+.img-single {
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: 5rem;
+  height: 1000px;
+}
+
+.single-post-market svg {
+  position: absolute;
+  margin-top: 6rem;
+  background-color: blue;
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
 }

@@ -23,3 +23,11 @@ body {
   justify-self: end;
   padding: 5px;
 }
+
+h2 {
+  padding: 2rem;
+}
+
+.App-intro {
+  height: 100%;
+}
