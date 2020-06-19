@@ -8,45 +8,30 @@ import { IconContext } from "react-icons";
 import Contacts from "../components/Contacts";
 import LikesComments from "../components/LikesComments";
 import Comments from "../components/Comments";
+import Stories from "../components/Stories";
+import { Link, useHistory } from "react-router-dom";
 
 export default function StartPage(props) {
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      created: "01-03-2019",
-      text: "Cool",
-      firstName: "A",
-      lastName: "AA",
-      img:
-        "https://cdn.pixabay.com/photo/2016/11/01/03/27/girl-1787357_960_720.jpg",
-    },
-    {
-      id: 2,
-      text: "I like it",
-      created: "05-03-2019",
-      firstName: "B",
-      lastName: "BB",
-      img:
-        "https://cdn.pixabay.com/photo/2016/07/18/20/33/elephant-1526709_960_720.jpg",
-    },
-  ]);
   const [groups, setGroups] = useState([
     {
+      id: 1,
       name: "Group1",
       desc: "desc of group1",
-      img: ``,
+      img: `https://cdn.pixabay.com/photo/2016/03/27/18/54/technology-1283624_960_720.jpg`,
       members: 34,
     },
     {
+      id: 2,
       name: "Group2",
       desc: "desc of group2",
-      img: ``,
+      img: `https://cdn.pixabay.com/photo/2020/06/10/09/31/mockup-5281992_960_720.jpg`,
       members: 55,
     },
     {
+      id: 3,
       name: "Group3",
       desc: "desc of group3",
-      img: ``,
+      img: `https://cdn.pixabay.com/photo/2020/06/12/14/06/mockup-5290462_960_720.jpg`,
       members: 555,
     },
   ]);
@@ -133,22 +118,29 @@ export default function StartPage(props) {
         // onMouseEnter={unblockGroups}
         // onMouseLeave={blockGroups}
       >
+        <h2>Your groups</h2>
         {groups
           ? groups.map((group, i) => (
-              <div className="group" key={i}>
-                <div>
-                  <img src="https://source.unsplash.com/random/120x60" alt="" />
+              <Link to={`/group/${group.id}`} key={i}>
+                <div className="group" key={i}>
+                  <div>
+                    <div
+                      className="group-img"
+                      style={{ backgroundImage: `url(${group.img})` }}
+                    />
+                  </div>
+                  <div>
+                    <div className="group-name">{group.name}</div>
+                    <div className="group-name">{group.desc}</div>
+                    <div>{group.members} members</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="group-name">{group.name}</div>
-                  <div className="group-name">{group.desc}</div>
-                  <div>{group.members}</div>
-                </div>
-              </div>
+              </Link>
             ))
           : null}
       </div>
       <div className="main-middle">
+        <Stories />
         <div className="mind">
           <div>
             <form>

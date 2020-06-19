@@ -11,6 +11,8 @@ import { MdSearch, MdArrowDropDownCircle } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import profile from "../img/image.jpg";
 import SinglePostMarket from "../containers/SinglePostMarket";
+import SingleGroup from "../containers/SingleGroup";
+
 import {
   homeIcon,
   watchIcon,
@@ -69,11 +71,11 @@ export default function NavBar() {
               {marketIcon()}
             </NavLink>
           </div>
-          <div>
+          {/* <div>
             <NavLink to="/groups" activeClassName="active">
               {groupsIcon()}
             </NavLink>
-          </div>
+          </div> */}
         </div>
         <div className="right">
           <div className="img-container">
@@ -115,6 +117,7 @@ export default function NavBar() {
         <Route path="/groups" component={Groups} />
         <Route path="/profile" component={Profile} />
         <Route exact path={`/post/:postId`} component={SinglePostMarket} />
+        <Route exact path={`/group/:groupId`} component={SingleGroup} />
         <Redirect to="/home" />
       </div>
     </>
