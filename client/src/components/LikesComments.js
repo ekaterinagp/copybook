@@ -9,6 +9,7 @@ import Comments from "../components/Comments";
 import { IconContext } from "react-icons";
 
 export default function LikesComments(props) {
+  console.log(props);
   return (
     <div className="bottom-video">
       <div className="like icon-action">
@@ -35,7 +36,7 @@ export default function LikesComments(props) {
             color: "blue",
           }}
         >
-          <AiTwotoneLike /> <p> {props.likes ? props.likes : 0} </p>
+          <AiTwotoneLike /> <p> {props.likes.length} </p>
         </IconContext.Provider>
       </div>
       <div className="comments-put">{props.comments.length} comments</div>

@@ -56,18 +56,54 @@ export default function StartPage(props) {
       feelings: "Feeling good",
       img: "link",
       text: "text here about i am fun",
+      comments: [
+        {
+          id: 1,
+          text: "Cool",
+          created: "01-03-2019",
+          firstName: "A",
+          lastName: "AA",
+          img:
+            "https://cdn.pixabay.com/photo/2016/11/01/03/27/girl-1787357_960_720.jpg",
+        },
+        {
+          id: 2,
+          text: "I like it",
+          created: "05-03-2019",
+          firstName: "B",
+          lastName: "BB",
+          img:
+            "https://cdn.pixabay.com/photo/2016/07/18/20/33/elephant-1526709_960_720.jpg",
+        },
+      ],
+      likes: [
+        {
+          id: 3,
+          firstName: "Anna",
+          lastName: "A",
+        },
+        {
+          id: 5,
+          firstName: "Ben",
+          lastName: "B",
+        },
+      ],
     },
     {
       name: "Hanna Panna",
       feelings: "Feeling bad",
       img: "link",
       text: "text here about i am not fun",
+      comments: [],
+      likes: [],
     },
     {
       name: "Anna A",
       feelings: "Feeling sick of it",
       img: "link",
       text: "text here about i am exhausted",
+      comments: [],
+      likes: [],
     },
   ]);
 
@@ -161,10 +197,12 @@ export default function StartPage(props) {
                     </div>
                   </div>
                   <div>{post.text}</div>
+                  {console.log(post)}
+                  {console.log(post.comments, post.likes)}
                   <LikesComments
                     handleClick={handelLikeClick}
-                    likes={likes}
-                    comments={comments}
+                    likes={post.likes}
+                    comments={post.comments}
                   />
                 </div>
               ))
@@ -192,21 +230,6 @@ export default function StartPage(props) {
         <div className="friends-activity">
           <h2>Contacts</h2>
           <Contacts />
-          {/* {usersActive.map((user, i) => (
-            <div className="mini-profile-contacts" key={i}>
-              <div className="grid-img-active">
-                <img src="https://source.unsplash.com/random/50x55" alt="" />
-                <div
-                  className={`active-user ${
-                    user.active ? "user-active" : "not-active"
-                  }`}
-                ></div>
-              </div>
-              <div>
-                <div>{user.name}</div>
-              </div>
-            </div>
-          ))} */}
         </div>
       </div>
     </div>

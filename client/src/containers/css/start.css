@@ -1,8 +1,8 @@
 .main-left {
-  display: grid;
+  /* display: grid; */
   grid-gap: 1rem;
   position: fixed;
-  top: 5rem;
+  margin-top: 7rem;
   width: 25vw;
   height: 100vh;
   padding: 0px 1rem;
