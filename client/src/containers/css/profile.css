@@ -1,0 +1,132 @@
+.profile-container {
+  display: grid;
+  position: absolute;
+  margin-top: 5rem;
+  grid-template-rows: 2fr 4fr;
+  width: 100%;
+  height: 100%;
+}
+
+.profile-top {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  display: grid;
+  grid-template-rows: 4fr 1fr;
+}
+
+.cover {
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
+
+  background-size: inherit;
+}
+
+.img-on-profile {
+  position: absolute;
+  margin-top: 19rem;
+  margin-left: 69rem;
+  width: 10rem;
+  height: 10rem;
+  border: 3px solid white;
+  border-radius: 50%;
+}
+
+.profile-name-full {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.img-icon-profile svg {
+  margin-top: 21rem;
+  margin-left: 77rem;
+  z-index: 100;
+  background-color: white;
+  border: 3px solid white;
+  border-radius: 50%;
+  position: relative;
+}
+
+.button-change-cover {
+  float: right;
+  margin-right: 45rem;
+}
+
+.button-change-cover button {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr;
+  padding: 7px;
+  border-radius: 15px;
+}
+
+.button-change-cover button p {
+  text-align: center;
+  font-size: large;
+  font-weight: 500;
+  padding: 5px;
+}
+.button-change-cover button svg {
+  justify-self: end;
+}
+
+.profile-bottom {
+  background-color: #f0f2f5;
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  grid-gap: 2rem;
+}
+
+.left-part,
+.right-part {
+  border-radius: 15px;
+  background-color: white;
+  margin-top: 10px;
+}
+
+.left-part {
+  width: 50%;
+  justify-self: end;
+}
+
+.right-part {
+  width: 70%;
+}
+
+.grid-intro {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.grid-intro svg {
+  justify-self: center;
+}
+
+.intro h2,
+.photo h2,
+.friends h2 {
+  padding: 2rem;
+}
+
+.edit-intro {
+  box-shadow: none;
+  border: none;
+  width: 90%;
+  padding: 10px;
+  background-color: #d8dadf;
+  margin: 10px 10px 0 20px;
+  font-size: large;
+}
+
+.photo-container,
+.friends-container {
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
+  grid-gap: 2em;
+  margin: 0 10px 0 17px;
+}
+
+.photo-one {
+  width: 150px;
+  height: 150px;
+  background-size: cover;
+  border-radius: 15px;
+}
