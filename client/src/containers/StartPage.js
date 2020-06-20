@@ -8,6 +8,9 @@ import { IconContext } from "react-icons";
 import Contacts from "../components/Contacts";
 import LikesComments from "../components/LikesComments";
 import Comments from "../components/Comments";
+import WhatsUp from "../components/WhatsUp";
+import Posts from "../components/Posts";
+
 import Stories from "../components/Stories";
 import { Link, useHistory } from "react-router-dom";
 
@@ -37,9 +40,13 @@ export default function StartPage(props) {
   ]);
   const [usersPosts, setUsersPost] = useState([
     {
+      id: 1,
       name: "Jesper Hansen",
       feelings: "Feeling good",
-      img: "link",
+      user_img:
+        "https://cdn.pixabay.com/photo/2012/10/10/10/36/moon-landing-60582_960_720.jpg",
+      img:
+        "https://cdn.pixabay.com/photo/2020/06/01/20/06/moon-5248235_960_720.jpg",
       text: "text here about i am fun",
       comments: [
         {
@@ -75,18 +82,25 @@ export default function StartPage(props) {
       ],
     },
     {
+      id: 2,
       name: "Hanna Panna",
       feelings: "Feeling bad",
-      img: "link",
+      user_img:
+        "https://cdn.pixabay.com/photo/2015/05/02/11/48/pope-749837_960_720.jpg",
+      img: "",
       text: "text here about i am not fun",
       comments: [],
       likes: [],
     },
     {
+      id: 3,
       name: "Anna A",
       feelings: "Feeling sick of it",
-      img: "link",
-      text: "text here about i am exhausted",
+      user_img:
+        "https://cdn.pixabay.com/photo/2016/03/04/03/54/anna-may-wong-1235440_960_720.jpg",
+      img:
+        "https://cdn.pixabay.com/photo/2016/03/04/03/54/anna-may-wong-1235440_960_720.jpg",
+      text: "new picture",
       comments: [],
       likes: [],
     },
@@ -141,39 +155,9 @@ export default function StartPage(props) {
       </div>
       <div className="main-middle">
         <Stories />
-        <div className="mind">
-          <div>
-            <form>
-              <input
-                type="text"
-                placeholder={`${props.user}, what are you up to?`}
-              />
-            </form>
-          </div>
-          <div>
-            <div className="icons-container">
-              <IconContext.Provider
-                value={{ color: "lightgreen", size: "1.5em" }}
-              >
-                <FaImages />{" "}
-              </IconContext.Provider>{" "}
-              <p className="icon-title">Photo/Video</p>
-            </div>
-            <div className="icons-container">
-              <IconContext.Provider value={{ color: "#FAA41A", size: "1.5em" }}>
-                <GoSmiley />{" "}
-              </IconContext.Provider>
-              <p className="icon-title">Feelings/Activity</p>
-            </div>
-            <div className="icons-container">
-              <IconContext.Provider value={{ color: "#f02849", size: "1.5em" }}>
-                <MdLiveTv />{" "}
-              </IconContext.Provider>
-              <p className="icon-title">Live Video</p>
-            </div>
-          </div>
-        </div>
-        <div className="posts">
+        <WhatsUp user={props.user} />
+        <Posts posts={usersPosts} likeClick={handelLikeClick} color={"white"} />
+        {/* <div className="posts">
           {usersPosts
             ? usersPosts.map((post, i) => (
                 <div className="post" key={i}>
@@ -199,7 +183,7 @@ export default function StartPage(props) {
                 </div>
               ))
             : null}
-        </div>
+        </div> */}
       </div>
       <div
         className="main-right"

@@ -10,7 +10,7 @@
 .profile-top {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   display: grid;
-  grid-template-rows: 4fr 1fr;
+  /* grid-template-rows: 4fr 1fr; */
 }
 
 .cover {
@@ -102,7 +102,8 @@
 
 .intro h2,
 .photo h2,
-.friends h2 {
+.friends h2,
+.right-part h2 {
   padding: 2rem;
 }
 
@@ -129,4 +130,45 @@
   height: 150px;
   background-size: cover;
   border-radius: 15px;
+}
+
+.mind {
+  width: 100%;
+  padding: 1rem;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+}
+
+.mind > div:first-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 1rem;
+}
+.mind form input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.05);
+}
+.mind > div:last-child {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+
+  padding-top: 1rem;
+}
+
+.editProfile {
+  width: 6%;
+  display: grid;
+  background-color: #d8dadf;
+  grid-template-columns: 0.5fr 2fr;
+  padding: 5px;
+  border-radius: 15px;
+  font-size: large;
+  border: none;
+  justify-self: center;
+  margin: 1rem;
+}
+
+.button-text {
+  padding-top: 8px;
 }

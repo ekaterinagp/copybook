@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../containers/css/profile.css";
-import { MdPhotoCamera } from "react-icons/md";
+import { MdPhotoCamera, MdEdit } from "react-icons/md";
+import { MdModeEdit } from "react-icons/md";
+
 import { MdWork } from "react-icons/md";
 import { BsHouseDoorFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
+import WhatsUp from "../components/WhatsUp";
+import Posts from "../components/Posts";
 
 export default function Profile() {
   const [user, setUser] = useState({
@@ -55,6 +59,103 @@ export default function Profile() {
       },
     ],
   });
+
+  const [posts, setPosts] = useState([
+    {
+      id: 1,
+      user_id: 1,
+      name: "Anna A",
+      user_img:
+        "https://cdn.pixabay.com/photo/2017/11/11/21/55/girl-2940655_960_720.jpg",
+      created_at: "01-06-2020",
+      feelings: "feeling excitied",
+      img:
+        "https://cdn.pixabay.com/photo/2017/06/07/10/47/elephant-2380009_960_720.jpg",
+      text: "Love elephants",
+      comments: [
+        {
+          id: 1,
+          text: "Cool",
+          created: "01-03-2019",
+          firstName: "A",
+          lastName: "AA",
+          img:
+            "https://cdn.pixabay.com/photo/2016/11/01/03/27/girl-1787357_960_720.jpg",
+        },
+        {
+          id: 2,
+          text: "I like it",
+          created: "05-03-2019",
+          firstName: "B",
+          lastName: "BB",
+          img:
+            "https://cdn.pixabay.com/photo/2016/07/18/20/33/elephant-1526709_960_720.jpg",
+        },
+      ],
+      likes: [
+        {
+          id: 3,
+          firstName: "George",
+          lastName: "Jensen",
+        },
+        {
+          id: 5,
+          firstName: "Ben",
+          lastName: "B",
+        },
+      ],
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: "Anna A",
+      user_img:
+        "https://cdn.pixabay.com/photo/2017/11/11/21/55/girl-2940655_960_720.jpg",
+      created_at: "06-06-2020",
+      feelings: "feeling blue",
+      img:
+        "https://cdn.pixabay.com/photo/2015/10/30/20/13/sunrise-1014713_960_720.jpg",
+      text: "Sunset",
+      comments: [
+        {
+          id: 4,
+          text: "Nice",
+          created: "06-06-2020",
+          firstName: "A",
+          lastName: "AA",
+          img:
+            "https://cdn.pixabay.com/photo/2016/11/01/03/27/girl-1787357_960_720.jpg",
+        },
+        {
+          id: 5,
+          text: "I like it",
+          created: "06-06-2020",
+          firstName: "B",
+          lastName: "BB",
+          img:
+            "https://cdn.pixabay.com/photo/2016/07/18/20/33/elephant-1526709_960_720.jpg",
+        },
+      ],
+      likes: [
+        {
+          id: 3,
+          firstName: "George",
+          lastName: "Jensen",
+        },
+        {
+          id: 5,
+          firstName: "Ben",
+          lastName: "B",
+        },
+      ],
+    },
+  ]);
+
+  const handelLikeClick = (e) => {
+    console.log(e.target.style);
+    e.target.style.fill = "blue";
+  };
+
   return (
     <div className="profile-container">
       <div className="profile-top">
@@ -81,6 +182,14 @@ export default function Profile() {
         <h2 className="profile-name-full">
           {user.firstName} {user.lastName}
         </h2>
+        <IconContext.Provider value={{ size: "2em" }}>
+          {" "}
+          <button className="editProfile">
+            {" "}
+            <MdEdit />
+            <p className="button-text"> Edit Profile </p>
+          </button>{" "}
+        </IconContext.Provider>
       </div>
       <div className="profile-bottom">
         <div className="left-part">
@@ -140,7 +249,11 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        <div className="right-part"></div>
+        <div className="right-part">
+          <WhatsUp user={user.firstName} />
+          <h2>Posts</h2>
+          <Posts posts={posts} likeClick={handelLikeClick} color={"#f0f2f5"} />
+        </div>
       </div>
     </div>
   );
