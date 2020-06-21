@@ -9,7 +9,7 @@ import { IconContext } from "react-icons";
 import { GiElephant } from "react-icons/gi";
 import { MdSearch, MdArrowDropDownCircle } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import profile from "../img/image.jpg";
+
 import SinglePostMarket from "../containers/SinglePostMarket";
 import SingleGroup from "../containers/SingleGroup";
 
@@ -28,7 +28,9 @@ export default function NavBar() {
   const [notifications, setNotifications] = useState(3);
   const [messages, setMessages] = useState(1);
   const [user, setUser] = useState({
-    name: "Ekaterina",
+    name: "Anna",
+    user_img:
+      "https://cdn.pixabay.com/photo/2017/11/11/21/55/girl-2940655_960_720.jpg",
   });
   return (
     <>
@@ -45,7 +47,7 @@ export default function NavBar() {
             <form>
               <div className="search-input">
                 {" "}
-                <input type="text" />
+                <input type="text" placeholder="Search Facebook" />
                 <IconContext.Provider
                   value={{ size: "1em", position: "absolute" }}
                 >
@@ -80,7 +82,7 @@ export default function NavBar() {
         <div className="right">
           <div className="img-container">
             <NavLink to="/profile">
-              <img className="profile-img" src={profile} alt="Profile" />
+              <img className="profile-img" src={user.user_img} alt="Profile" />
             </NavLink>
           </div>
 
@@ -107,11 +109,7 @@ export default function NavBar() {
         </div>
       </div>
       <div className="App-intro">
-        <Route
-          path="/home"
-          exact
-          component={() => <StartPage user={user.name} />}
-        />
+        <Route path="/home" exact component={() => <StartPage user={user} />} />
         <Route path="/watch" component={Watch} />
         <Route path="/marketplace" component={Marketplace} />
         <Route path="/groups" component={Groups} />

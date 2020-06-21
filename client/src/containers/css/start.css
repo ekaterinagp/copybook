@@ -92,7 +92,8 @@ div.main-middle .feel {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
 }
-.mini-profile > img {
+.mini-profile > img,
+.mini {
   width: 3rem;
   height: 3rem;
   border: 1px solid rgba(0, 0, 0, 0.3);
@@ -372,4 +373,26 @@ div.main-middle .feel {
 
 .post-img {
   width: 70%;
+}
+
+.add-post-button {
+  box-shadow: none;
+  border: none;
+  width: 90%;
+  padding: 10px;
+  background-color: #d8dadf;
+  margin: 10px 10px 0 20px;
+  font-size: large;
+  border-radius: 15px;
+}
+
+.add-post-button p {
+  opacity: 0.6;
+  text-align: start;
+  padding-left: 10px;
+}
+
+.whatsup {
+  display: grid;
+  grid-template-columns: 0.1fr 5fr;
 }

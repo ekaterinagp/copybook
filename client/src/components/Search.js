@@ -11,6 +11,7 @@ export default function Search(props) {
         type="text"
         placeholder={props.placeholder}
         onChange={props.getValue}
+        style={{ textIndent: "15px" }}
       />
     </form>
   );

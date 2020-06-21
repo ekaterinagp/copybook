@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar";
@@ -6,6 +6,7 @@ import Watch from "./containers/Watch";
 import Marketplace from "./containers/Marketplace";
 import StartPage from "./containers/StartPage";
 import Profile from "./containers/Profile";
+import Overlay from "./components/Overlay";
 
 function App() {
   return (

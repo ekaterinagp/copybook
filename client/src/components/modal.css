@@ -1,0 +1,115 @@
+.show {
+  display: block;
+  background-color: white;
+}
+
+.hide {
+  display: none;
+}
+
+.overlay {
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0000003a;
+  transition: opacity 0.2s ease;
+}
+
+.modal {
+  display: grid;
+  /* grid-template-rows: 1fr 1fr 3fr 1fr; */
+  z-index: 1000;
+  width: 30%;
+  /* height: 50%; */
+  position: relative;
+  margin: 0px auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 2px;
+  transform: translateY(100%);
+  transition: transform 0.2s ease;
+}
+
+#close-btn {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  /* top: -1rem; */
+  width: 2rem;
+  padding-top: -2px;
+  /* margin-top: 1rem; */
+  height: 2rem;
+  padding: 0.5rem;
+  margin: 0 auto;
+  border: 0;
+  background-color: inherit;
+  border-radius: 50%;
+  background-color: #d8dadf;
+  /* box-shadow: 1px 1px 1px #0000003a; */
+  cursor: pointer;
+}
+
+.add-post {
+  box-shadow: none;
+  border: none;
+  width: 90%;
+  padding: 10px;
+  background-color: #d8dadf;
+  margin: 10px 10px 0 20px;
+  font-size: large;
+  border-radius: 15px;
+}
+
+.mini {
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+}
+
+.modal-top {
+  border-bottom: 1px solid rgb(211, 209, 209);
+}
+
+.modal-middle {
+  display: grid;
+  grid-template-columns: 0.2fr 2fr;
+}
+
+.modal-middle img {
+  justify-self: center;
+}
+
+.text textarea {
+  width: 100%;
+  border: none;
+}
+
+textarea:focus {
+  outline: 1px solid rgb(211, 209, 209);
+}
+
+.text,
+.modal-middle {
+  padding: 10px;
+}
+
+.modal-top h2 {
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+.add-to-post {
+  padding: 10px;
+  border: 1px solid rgb(211, 209, 209);
+  display: grid;
+  grid-template-columns: 2fr 4fr;
+}
+
+.icons-add-more {
+  justify-self: end;
+  display: flex;
+}

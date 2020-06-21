@@ -10,11 +10,17 @@ import LikesComments from "../components/LikesComments";
 import Comments from "../components/Comments";
 import WhatsUp from "../components/WhatsUp";
 import Posts from "../components/Posts";
+import ModalPost from "../components/ModalPost";
+import Overlay from "../components/Overlay";
 
 import Stories from "../components/Stories";
 import { Link, useHistory } from "react-router-dom";
 
 export default function StartPage(props) {
+  console.log(props);
+  const [show, setShow] = useState(false);
+  const openModal = () => setShow(true);
+  const closeModal = () => setShow(false);
   const [groups, setGroups] = useState([
     {
       id: 1,
@@ -126,38 +132,51 @@ export default function StartPage(props) {
   };
 
   return (
-    <div className="container-3-columns">
-      <div
-        className="main-left"
-        // onMouseEnter={unblockGroups}
-        // onMouseLeave={blockGroups}
-      >
-        <h2>Your groups</h2>
-        {groups
-          ? groups.map((group, i) => (
-              <Link to={`/group/${group.id}`} key={i}>
-                <div className="group" key={i}>
-                  <div>
-                    <div
-                      className="group-img"
-                      style={{ backgroundImage: `url(${group.img})` }}
-                    />
+    <>
+      <div className="container-3-columns">
+        <div
+          className="main-left"
+          // onMouseEnter={unblockGroups}
+          // onMouseLeave={blockGroups}
+        >
+          <h2>Your groups</h2>
+          {groups
+            ? groups.map((group, i) => (
+                <Link to={`/group/${group.id}`} key={i}>
+                  <div className="group" key={i}>
+                    <div>
+                      <div
+                        className="group-img"
+                        style={{ backgroundImage: `url(${group.img})` }}
+                      />
+                    </div>
+                    <div>
+                      <div className="group-name">{group.name}</div>
+                      <div className="group-name">{group.desc}</div>
+                      <div>{group.members} members</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="group-name">{group.name}</div>
-                    <div className="group-name">{group.desc}</div>
-                    <div>{group.members} members</div>
-                  </div>
-                </div>
-              </Link>
-            ))
-          : null}
-      </div>
-      <div className="main-middle">
-        <Stories />
-        <WhatsUp user={props.user} />
-        <Posts posts={usersPosts} likeClick={handelLikeClick} color={"white"} />
-        {/* <div className="posts">
+                </Link>
+              ))
+            : null}
+        </div>
+        <div className="main-middle">
+          <Stories />
+          {!show && (
+            <WhatsUp
+              onClick={openModal}
+              img={props.user.user_img}
+              user={props.user.name}
+            />
+          )}
+
+          <ModalPost user={props.user} closeModal={closeModal} show={show} />
+          <Posts
+            posts={usersPosts}
+            likeClick={handelLikeClick}
+            color={"white"}
+          />
+          {/* <div className="posts">
           {usersPosts
             ? usersPosts.map((post, i) => (
                 <div className="post" key={i}>
@@ -184,30 +203,31 @@ export default function StartPage(props) {
               ))
             : null}
         </div> */}
-      </div>
-      <div
-        className="main-right"
-        // onMouseEnter={unblockGroups}
-        // onMouseLeave={blockGroups}
-      >
-        <div className="birthday-block">
-          <h2>Birthdays</h2>
-          {birthday.length
-            ? birthday.map((man, i) => (
-                <div className="birthday" key={i}>
-                  <AiOutlineGift />
-                  <p className="birthday-title">
-                    Today is {man.name}'s birthday!{" "}
-                  </p>
-                </div>
-              ))
-            : null}
         </div>
-        <div className="friends-activity">
-          <h2>Contacts</h2>
-          <Contacts />
+        <div
+          className="main-right"
+          // onMouseEnter={unblockGroups}
+          // onMouseLeave={blockGroups}
+        >
+          <div className="birthday-block">
+            <h2>Birthdays</h2>
+            {birthday.length
+              ? birthday.map((man, i) => (
+                  <div className="birthday" key={i}>
+                    <AiOutlineGift />
+                    <p className="birthday-title">
+                      Today is {man.name}'s birthday!{" "}
+                    </p>
+                  </div>
+                ))
+              : null}
+          </div>
+          <div className="friends-activity">
+            <h2>Contacts</h2>
+            <Contacts />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import "../containers/css/start.css";
 import { FaImages } from "react-icons/fa";
 import { GoSmiley } from "react-icons/go";
 import { MdLiveTv } from "react-icons/md";
@@ -8,13 +9,11 @@ import { IconContext } from "react-icons";
 export default function WhatsUp(props) {
   return (
     <div className="mind">
-      <div>
-        <form>
-          <input
-            type="text"
-            placeholder={`${props.user}, what are you up to?`}
-          />
-        </form>
+      <div className="whatsup">
+        <img className="mini" src={props.img}></img>
+        <button className="add-post-button" onClick={props.onClick}>
+          <p>{`${props.user}, what are you up to?`}</p>
+        </button>
       </div>
       <div>
         <div className="icons-container">
