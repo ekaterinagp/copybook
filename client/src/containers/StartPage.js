@@ -149,7 +149,7 @@ export default function StartPage(props) {
           // onMouseEnter={unblockGroups}
           // onMouseLeave={blockGroups}
         >
-          <h2>Your groups</h2>
+          <h2>Groups</h2>
           {groups
             ? groups.map((group, i) => (
                 <Link to={`/group/${group.id}`} key={i}>
