@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import "./css/start.css";
-import { FaImages } from "react-icons/fa";
-import { GoSmiley } from "react-icons/go";
-import { MdLiveTv } from "react-icons/md";
+
 import { AiOutlineGift } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import Contacts from "../components/Contacts";
-import LikesComments from "../components/LikesComments";
-import Comments from "../components/Comments";
+
 import WhatsUp from "../components/WhatsUp";
 import Posts from "../components/Posts";
 import ModalPost from "../components/ModalPost";
-import Overlay from "../components/Overlay";
 
 import Stories from "../components/Stories";
 import { Link, useHistory } from "react-router-dom";
@@ -54,6 +50,20 @@ export default function StartPage(props) {
       img:
         "https://cdn.pixabay.com/photo/2020/06/01/20/06/moon-5248235_960_720.jpg",
       text: "text here about i am fun",
+      tag: [
+        {
+          id: 3,
+          name: "Betty Bett",
+          user_img:
+            "https://cdn.pixabay.com/photo/2019/12/04/10/22/engineer-4672332_960_720.jpg",
+        },
+        {
+          id: 7,
+          name: "Boris Becker",
+          user_img:
+            "https://cdn.pixabay.com/photo/2015/05/02/11/52/boris-becker-749855_960_720.jpg",
+        },
+      ],
       comments: [
         {
           id: 1,
@@ -176,33 +186,6 @@ export default function StartPage(props) {
             likeClick={handelLikeClick}
             color={"white"}
           />
-          {/* <div className="posts">
-          {usersPosts
-            ? usersPosts.map((post, i) => (
-                <div className="post" key={i}>
-                  <div className="mini-profile">
-                    <img src="https://source.unsplash.com/random/51x58" />
-                    <div>
-                      <div>{post.name}</div>
-                      <div>{post.feelings}</div>
-                      <img
-                        src="https://source.unsplash.com/random/600x400"
-                        alt=""
-                      ></img>
-                    </div>
-                  </div>
-                  <div>{post.text}</div>
-                  {console.log(post)}
-                  {console.log(post.comments, post.likes)}
-                  <LikesComments
-                    handleClick={handelLikeClick}
-                    likes={post.likes}
-                    comments={post.comments}
-                  />
-                </div>
-              ))
-            : null}
-        </div> */}
         </div>
         <div
           className="main-right"
