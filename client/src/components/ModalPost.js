@@ -4,6 +4,10 @@ import ReactDOM from "react-dom";
 import { FaImages } from "react-icons/fa";
 import { GoSmiley } from "react-icons/go";
 import { BsPersonPlusFill } from "react-icons/bs";
+import { RiEmotionHappyLine } from "react-icons/ri";
+import { RiEmotionUnhappyLine } from "react-icons/ri";
+import { RiEmotionSadLine } from "react-icons/ri";
+import { RiEmotionLaughLine } from "react-icons/ri";
 import { IconContext } from "react-icons";
 import Debouncer from "./Debouncer";
 import UploadFirebase from "./UploadFirebase";
@@ -12,6 +16,8 @@ import { firebase } from "./firebase-config";
 
 export default function Modal(props) {
   const { show, closeModal, user } = props;
+  const [feelingsSet, setFeelingsSet] = useState(false);
+  const [friendsVisible, setFreindsVisible] = useState(false);
 
   const [imageAsFile, setImageAsFile] = useState("");
   const [imageAsUrl, setImageAsUrl] = useState("");
@@ -24,13 +30,7 @@ export default function Modal(props) {
     user_img: "",
     img: null,
     text: "",
-    tag: [
-      {
-        id: null,
-        name: "",
-        user_img: "",
-      },
-    ],
+    tag: [],
     comments: [],
     likes: [],
   });
@@ -127,6 +127,38 @@ export default function Modal(props) {
     setUploadImg(URL.createObjectURL(e.target.files[0]));
   };
 
+  const showFellings = () => {
+    setFeelingsSet(true);
+  };
+
+  const showFriends = () => {
+    setFeelingsSet(false);
+    setFreindsVisible(true);
+  };
+
+  const getFriend = (friend) => {
+    post.tag = [];
+    console.log(friend);
+    post.tag.push({
+      id: friend.id,
+      name: friend.name,
+      user_img: friend.user_img,
+    });
+    console.log(post.tag);
+    setPost({ ...post });
+    // setFeelingsSet(false);
+    console.log(post);
+    setFreindsVisible(false);
+  };
+
+  const getFeeling = (e) => {
+    setFreindsVisible(false);
+    console.log(e.target.value);
+    post.feeling = e.target.value;
+    setPost({ ...post });
+    setFeelingsSet(false);
+  };
+
   const modal = (
     <>
       <div className={show ? "overlay" : "hide"} onClick={closeModal} />
@@ -140,7 +172,11 @@ export default function Modal(props) {
         </div>
         <div className="modal-middle">
           <img className="mini" src={props.user.user_img} />
-          <h3>{props.user.name}</h3>
+          <h4>
+            {props.user.name}{" "}
+            {post.feeling ? <>is feeling {post.feeling}</> : null}
+            {post.tag.length ? <> with {post.tag[0].name}</> : null}
+          </h4>
         </div>
         <div className="text">
           <textarea
@@ -156,6 +192,62 @@ export default function Modal(props) {
               }}
             ></div>
           )}
+          {feelingsSet ? (
+            <div className="feeling-block">
+              <h2>How are you feeling?</h2>
+              <div className="one-feeling">
+                <input defaultValue="good " onClick={getFeeling} />
+
+                <IconContext.Provider
+                  value={{ color: "rgb(250, 164, 26)", size: "2em" }}
+                >
+                  <RiEmotionHappyLine />
+                </IconContext.Provider>
+              </div>
+              <div className="one-feeling">
+                <input defaultValue="bad" onClick={getFeeling} />
+                <IconContext.Provider
+                  value={{ color: "rgb(250, 164, 26)", size: "2em" }}
+                >
+                  <RiEmotionUnhappyLine />
+                </IconContext.Provider>
+              </div>
+              <div className="one-feeling">
+                <input defaultValue="amazing" onClick={getFeeling} />
+                <IconContext.Provider
+                  value={{ color: "rgb(250, 164, 26)", size: "2em" }}
+                >
+                  <RiEmotionLaughLine />
+                </IconContext.Provider>
+              </div>
+              <div className="one-feeling">
+                <input defaultValue="sad" onClick={getFeeling} />
+                <IconContext.Provider
+                  value={{ color: "rgb(250, 164, 26)", size: "2em" }}
+                >
+                  <RiEmotionSadLine />
+                </IconContext.Provider>
+              </div>
+            </div>
+          ) : null}
+          {friendsVisible ? (
+            <>
+              {props.user.friends.map((friend, i) => (
+                <div
+                  className="one-friend"
+                  onClick={() => getFriend(friend)}
+                  key={i}
+                >
+                  <div
+                    className="div-friend"
+                    style={{ backgroundImage: `url(${friend.user_img})` }}
+                  />
+
+                  <h4>{friend.name}</h4>
+                </div>
+              ))}
+            </>
+          ) : null}
         </div>
 
         <div className="modal-bottom">
@@ -163,11 +255,14 @@ export default function Modal(props) {
             <h3>Add to your post</h3>
             <div className="icons-add-more">
               <IconContext.Provider
-                value={{ color: "lightgreen", size: "1.5em" }}
+                value={{
+                  color: "lightgreen",
+                  size: "1.5em",
+                }}
               >
                 <div className="tooltip">
                   <label for="file">
-                    <div>
+                    <div className="svg-icon-div">
                       <FaImages />{" "}
                       <span className="tooltiptext">Add an image</span>
                     </div>
@@ -181,23 +276,20 @@ export default function Modal(props) {
                     className="input-firebase"
                     onChange={handleImageAsFile}
                   />
-                  {/* <UploadFirebase /> */}
                 </div>
               </IconContext.Provider>{" "}
-              {/* <p className="icon-title">Photo/Video</p> */}
               <IconContext.Provider value={{ color: "#FAA41A", size: "1.5em" }}>
                 <div className="tooltip">
-                  <GoSmiley /> <span className="tooltiptext">Feeling</span>
+                  <GoSmiley onClick={showFellings} />{" "}
+                  <span className="tooltiptext">Feeling</span>
                 </div>
               </IconContext.Provider>
-              {/* <p className="icon-title">Feelings/Activity</p> */}
               <IconContext.Provider value={{ color: "blue", size: "1.5em" }}>
                 <div className="tooltip">
-                  <BsPersonPlusFill />{" "}
+                  <BsPersonPlusFill onClick={showFriends} />{" "}
                   <span className="tooltiptext">Tag a friend</span>
                 </div>
               </IconContext.Provider>
-              {/* <p className="icon-title">Feelings/Activity</p> */}
             </div>
           </div>
           <button

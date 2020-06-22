@@ -31,6 +31,26 @@ export default function NavBar() {
     name: "Anna",
     user_img:
       "https://cdn.pixabay.com/photo/2017/11/11/21/55/girl-2940655_960_720.jpg",
+    friends: [
+      {
+        id: 3,
+        name: "Gia Lia",
+        user_img:
+          "https://cdn.pixabay.com/photo/2016/12/19/21/36/winters-1919143_960_720.jpg",
+      },
+      {
+        id: 6,
+        name: "Lia Mart",
+        user_img:
+          "https://cdn.pixabay.com/photo/2017/06/24/02/56/art-2436545_960_720.jpg",
+      },
+      {
+        id: 6,
+        name: "Maya Pi",
+        user_img:
+          "https://cdn.pixabay.com/photo/2016/12/13/00/13/rabbit-1903016_960_720.jpg",
+      },
+    ],
   });
   return (
     <>
