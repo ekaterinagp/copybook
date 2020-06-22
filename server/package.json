@@ -7,10 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "detect-file-type": "^0.2.8",
     "express": "4.17.1",
     "formidable": "1.2.2",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "3.5.7"
+    "mongodb": "3.5.7",
+    "nodemon": "^2.0.4",
+    "uuid": "^8.1.0"
   },
   "author": "Ekaterina GP",
   "license": "MIT"
