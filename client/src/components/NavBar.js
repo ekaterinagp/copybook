@@ -28,6 +28,7 @@ export default function NavBar() {
   const [notifications, setNotifications] = useState(3);
   const [messages, setMessages] = useState(1);
   const [user, setUser] = useState({
+    id: 3,
     name: "Anna",
     user_img:
       "https://cdn.pixabay.com/photo/2017/11/11/21/55/girl-2940655_960_720.jpg",

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./modal.css";
+import axios from "axios";
 import ReactDOM from "react-dom";
 import { FaImages } from "react-icons/fa";
 import { GoSmiley } from "react-icons/go";
@@ -18,7 +19,7 @@ export default function Modal(props) {
   const { show, closeModal, user } = props;
   const [feelingsSet, setFeelingsSet] = useState(false);
   const [friendsVisible, setFreindsVisible] = useState(false);
-
+  console.log(props);
   const [imageAsFile, setImageAsFile] = useState("");
   const [imageAsUrl, setImageAsUrl] = useState("");
 
@@ -106,14 +107,25 @@ export default function Modal(props) {
       console.log(post);
     }
   };
+  const addPostToDb = async () => {
+    const res = await axios.post(
+      `http://localhost:9090/posts/add/${props.user.id}`,
+      post
+    );
+    console.log(res);
+  };
 
   const addPost = (e) => {
     e.preventDefault();
-    handleFireBaseUpload(e);
-    console.log(imageAsUrl);
-    post.img = imageAsUrl;
-    setPost({ ...post });
-    console.log(post);
+    if (uploadImg) {
+      handleFireBaseUpload(e);
+      console.log(imageAsUrl);
+      post.img = imageAsUrl;
+      setPost({ ...post });
+      console.log(post);
+    }
+    addPostToDb();
+    setPost("");
     closeModal();
   };
 
@@ -175,7 +187,7 @@ export default function Modal(props) {
           <h4>
             {props.user.name}{" "}
             {post.feeling ? <>is feeling {post.feeling}</> : null}
-            {post.tag.length ? <> with {post.tag[0].name}</> : null}
+            {post.tag && post.tag.length ? <> with {post.tag[0].name}</> : null}
           </h4>
         </div>
         <div className="text">
@@ -261,7 +273,7 @@ export default function Modal(props) {
                 }}
               >
                 <div className="tooltip">
-                  <label for="file">
+                  <label htmlFor="file">
                     <div className="svg-icon-div">
                       <FaImages />{" "}
                       <span className="tooltiptext">Add an image</span>

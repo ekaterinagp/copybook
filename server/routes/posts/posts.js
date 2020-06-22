@@ -5,7 +5,50 @@ const fs = require("fs");
 const path = require("path");
 const router = require("express").Router();
 
-//@ route add post
+//@route to add post firebase
+
+router.post("/add/:userID", async (req, res) => {
+  const userID = req.params.userID;
+  const data = req.body;
+
+  // console.log(req.body);
+  const post = {
+    name: data.name,
+    user_id: userID,
+    feeling: data.feeling,
+    text: data.text,
+    img: data.img,
+    user_img: data.user_img,
+    tag: [],
+    comments: [],
+    likes: [],
+  };
+  if (data.tag && data.tag.length) {
+    data.tag.forEach((tag) => {
+      let tagTemp = {
+        id: tag.id,
+        name: tag.name,
+        user_img: tag.user_img,
+      };
+      post.tag.push(tagTemp);
+    });
+  }
+
+  if (post.feeling || post.img || post.text || post.tag.length) {
+    try {
+      db.collection("posts").insertOne(post, (err, dbResponse) => {
+        if (err) {
+          return res.send("mongo can not add a post");
+        }
+        return res.send("ok here");
+      });
+    } catch (ex) {
+      return res.status(500).send("System under maintainance");
+    }
+  }
+});
+
+//@ route add post with formidable
 router.post("/add-post/:userID", (req, res) => {
   const userID = req.params.userID;
 
