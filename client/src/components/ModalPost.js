@@ -114,6 +114,7 @@ export default function Modal(props) {
     post.img = imageAsUrl;
     setPost({ ...post });
     console.log(post);
+    closeModal();
   };
 
   useEffect(() => {
