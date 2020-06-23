@@ -14,121 +14,167 @@ import Debouncer from "./Debouncer";
 import UploadFirebase from "./UploadFirebase";
 import { storage } from "./firebase-config";
 import { firebase } from "./firebase-config";
+import { MdSettingsInputComponent } from "react-icons/md";
 
 export default function Modal(props) {
-  const { show, closeModal, user } = props;
+  const { show, closeModal } = props;
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState();
   const [feelingsSet, setFeelingsSet] = useState(false);
   const [friendsVisible, setFreindsVisible] = useState(false);
   console.log(props);
   const [imageAsFile, setImageAsFile] = useState("");
-  const [imageAsUrl, setImageAsUrl] = useState("");
+  const [imageAsUrl, setImageAsUrl] = useState();
+  const [feeling, setFeeling] = useState();
+  const [tag, setTag] = useState();
+  const [text, setText] = useState();
 
   const [disabled, setDisabled] = useState(true);
 
-  const [post, setPost] = useState({
-    name: "",
-    feeling: "",
-    user_img: "",
-    img: null,
-    text: "",
-    tag: [],
-    comments: [],
-    likes: [],
-  });
+  const getUser = async () => {
+    setLoading(true);
+    let userId = localStorage.getItem("id");
+    const res = await axios
+      .get(`http://localhost:9090/users/${userId}`)
+      .catch((error) => console.log(error.response.data));
+    console.log(res);
+    setUser(res.data);
+    setLoading(false);
+  };
 
-  useEffect(() => console.log(post), [post]);
+  // const [post, setPost] = useState({
+  //   firstName: user.firstName,
+  //   lastName: user.lastName,
+  //   feeling: feeling,
+  //   user_img: user.user_img,
+  //   img: imageAsUrl.imgUrl,
+  //   text: "",
+  //   tag: [],
+  //   comments: [],
+  //   likes: [],
+  // });
+
+  useEffect(() => getUser(), []);
 
   const handleImageAsFile = (e) => {
     const image = e.target.files[0];
     console.log(image);
     console.log("name?", image.name);
     setImageAsFile((imageFile) => image);
-    console.log(imageAsFile);
+    console.log({ imageAsFile });
+    // console.log({ imageFile });
+    console.log({ image });
     loadImg(e);
   };
 
   const handleFireBaseUpload = (e) => {
-    e.preventDefault();
-
-    if (imageAsFile === "") {
-      console.error(`not an image, the image file is a ${typeof imageAsFile}`);
-    }
-
-    const uploadTask = storage
-      .ref(`/images/${imageAsFile.name}`)
-      .put(imageAsFile);
-
-    //initiates the firebase side uploading
-    uploadTask.on(
-      "state_changed",
-      (snapShot) => {
-        //takes a snap shot of the process as it is happening
-        console.log(snapShot);
-      },
-      (err) => {
-        //catches the errors
-        console.log(err);
-      },
-      () => {
-        // gets the functions from storage refences the image storage in firebase by the children
-        // gets the download url then sets the image from firebase as the value for the imgUrl key:
-        storage
-          .ref("images")
-          .child(imageAsFile.name)
-          .getDownloadURL()
-          .then((fireBaseUrl) => {
-            setImageAsUrl((prevObject) => ({
-              ...prevObject,
-              imgUrl: fireBaseUrl,
-            }));
-            console.log(imageAsUrl);
-          });
+    return new Promise((resolve, reject) => {
+      e.preventDefault();
+      if (imageAsFile === "") {
+        console.error(
+          `not an image, the image file is a ${typeof imageAsFile}`
+        );
       }
-    );
+
+      const uploadTask = storage
+        .ref(`/images/${imageAsFile.name}`)
+        .put(imageAsFile);
+
+      //initiates the firebase side uploading
+      uploadTask.on(
+        "state_changed",
+        (snapShot) => {
+          //takes a snap shot of the process as it is happening
+          console.log(snapShot);
+        },
+        (err) => {
+          //catches the errors
+          console.log(err);
+        },
+        () => {
+          // gets the functions from storage refences the image storage in firebase by the children
+          // gets the download url then sets the image from firebase as the value for the imgUrl key:
+          storage
+            .ref("images")
+            .child(imageAsFile.name)
+            .getDownloadURL()
+            .then(async (fireBaseUrl) => {
+              await setImageAsUrl((prevObject) => ({
+                ...prevObject,
+                imgUrl: fireBaseUrl,
+              }));
+              console.log("look herre", fireBaseUrl);
+              resolve(fireBaseUrl);
+            });
+        }
+      );
+    });
   };
 
   const getPostText = (e) => {
     console.log(e.target.value.length);
     if (e.target.value.length > 1 || uploadImg) {
       setDisabled(false);
+      setText(e.target.value);
 
-      // debouncer.call(1000, () => {
+      // let postTemp = {
+      //   img: imageAsUrl ? imageAsUrl.imgUrl : "",
+      //   feeling: "",
+      //   tag: [],
+      //   firstName: user.firstName,
+      //   lastName: user.lastName,
+      //   user_img: user.user_img,
+      //   text: e.target.value,
+      // };
+      // setPost({ ...postTemp });
 
-      // });
-
-      let postTemp = {
-        img: null,
-        name: props.user.name,
-        user_img: props.user.user_img,
-        text: e.target.value,
-      };
-      setPost({ ...postTemp });
-
-      console.log(post);
+      // console.log(post);
     }
   };
-  const addPostToDb = async () => {
+
+  const addPostToDb = async (post) => {
+    console.log({ post });
+    let userId = localStorage.getItem("id");
     const res = await axios.post(
-      `http://localhost:9090/posts/add/${props.user.id}`,
+      `http://localhost:9090/posts/add/${userId}`,
       post
     );
     console.log(res);
   };
 
-  const addPost = (e) => {
+  const addPost = async (e) => {
     e.preventDefault();
-    if (uploadImg) {
-      handleFireBaseUpload(e);
+    let imageUrl = "";
+    // console.log(uploadImg);
+    if (imageAsFile) {
+      imageUrl = await handleFireBaseUpload(e);
       console.log(imageAsUrl);
-      post.img = imageAsUrl;
-      setPost({ ...post });
-      console.log(post);
+      // let tempPost = {
+      //   img: imageAsUrl,
+      // };
+      // post.img = imageAsUrl.imgUrl;
+      // console.log(post.img);
     }
-    addPostToDb();
-    setPost("");
+    const post = {
+      img: imageUrl,
+      feeling: feeling,
+      tag: tag,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      user_img: user.user_img,
+      text: text,
+    };
+    console.log(post);
+
+    addPostToDb(post);
+
+    // setPost("");
     closeModal();
   };
 
+  // useEffect(() => {
+  //   console.log(post);
+  // }, [post]);
   useEffect(() => {
     console.log(imageAsUrl);
   }, [imageAsUrl]);
@@ -137,6 +183,7 @@ export default function Modal(props) {
 
   const loadImg = (e) => {
     setUploadImg(URL.createObjectURL(e.target.files[0]));
+    // handleFireBaseUpload(e);
   };
 
   const showFellings = () => {
@@ -149,25 +196,25 @@ export default function Modal(props) {
   };
 
   const getFriend = (friend) => {
-    post.tag = [];
+    let tag = [];
+
     console.log(friend);
-    post.tag.push({
-      id: friend.id,
-      name: friend.name,
+    tag.push({
+      user_id: friend.user_id,
+      firstName: friend.firstName,
+      lastName: friend.lastName,
       user_img: friend.user_img,
     });
-    console.log(post.tag);
-    setPost({ ...post });
-    // setFeelingsSet(false);
-    console.log(post);
+
+    // console.log(post);
+    setTag(tag);
     setFreindsVisible(false);
   };
 
   const getFeeling = (e) => {
     setFreindsVisible(false);
     console.log(e.target.value);
-    post.feeling = e.target.value;
-    setPost({ ...post });
+    setFeeling(e.target.value);
     setFeelingsSet(false);
   };
 
@@ -182,87 +229,89 @@ export default function Modal(props) {
           {" "}
           <h2>Create Post</h2>
         </div>
-        <div className="modal-middle">
-          <img className="mini" src={props.user.user_img} />
-          <h4>
-            {props.user.firstName}{" "}
-            {post.feeling ? <>is feeling {post.feeling}</> : null}
-            {post.tag && post.tag.length ? (
-              <> with {post.tag[0].firstName}</>
-            ) : null}
-          </h4>
-        </div>
-        <div className="text">
-          <textarea
-            placeholder={`What's on your mind,${props.user.firstName}?`}
-            onInput={getPostText}
-          ></textarea>
-          {!uploadImg ? null : (
-            // <img className="wish-img" src={imageAsUrl} alt="image tag" />
-            <div
-              className="post-div"
-              style={{
-                backgroundImage: `url(${uploadImg})`,
-              }}
-            ></div>
-          )}
-          {feelingsSet ? (
-            <div className="feeling-block">
-              <h2>How are you feeling?</h2>
-              <div className="one-feeling">
-                <input defaultValue="good " onClick={getFeeling} />
-
-                <IconContext.Provider
-                  value={{ color: "rgb(250, 164, 26)", size: "2em" }}
-                >
-                  <RiEmotionHappyLine />
-                </IconContext.Provider>
-              </div>
-              <div className="one-feeling">
-                <input defaultValue="bad" onClick={getFeeling} />
-                <IconContext.Provider
-                  value={{ color: "rgb(250, 164, 26)", size: "2em" }}
-                >
-                  <RiEmotionUnhappyLine />
-                </IconContext.Provider>
-              </div>
-              <div className="one-feeling">
-                <input defaultValue="amazing" onClick={getFeeling} />
-                <IconContext.Provider
-                  value={{ color: "rgb(250, 164, 26)", size: "2em" }}
-                >
-                  <RiEmotionLaughLine />
-                </IconContext.Provider>
-              </div>
-              <div className="one-feeling">
-                <input defaultValue="sad" onClick={getFeeling} />
-                <IconContext.Provider
-                  value={{ color: "rgb(250, 164, 26)", size: "2em" }}
-                >
-                  <RiEmotionSadLine />
-                </IconContext.Provider>
-              </div>
+        {!user ? (
+          <p>Loading</p>
+        ) : (
+          <>
+            <div className="modal-middle">
+              <img className="mini" src={user.user_img} />
+              <h4>
+                {user.firstName} {feeling ? <>is feeling {feeling}</> : null}
+                {tag && tag.length ? <> with {tag[0].firstName}</> : null}
+              </h4>
             </div>
-          ) : null}
-          {friendsVisible ? (
-            <>
-              {props.user.friends.map((friend, i) => (
+            <div className="text">
+              <textarea
+                placeholder={`What's on your mind,${user.firstName}?`}
+                onInput={getPostText}
+              ></textarea>
+              {!uploadImg ? null : (
                 <div
-                  className="one-friend"
-                  onClick={() => getFriend(friend)}
-                  key={i}
-                >
-                  <div
-                    className="div-friend"
-                    style={{ backgroundImage: `url(${friend.user_img})` }}
-                  />
+                  className="post-div"
+                  style={{
+                    backgroundImage: `url(${uploadImg})`,
+                  }}
+                ></div>
+              )}
+              {feelingsSet ? (
+                <div className="feeling-block">
+                  <h2>How are you feeling?</h2>
+                  <div className="one-feeling">
+                    <input defaultValue="good " onClick={getFeeling} />
 
-                  <h4>{friend.name}</h4>
+                    <IconContext.Provider
+                      value={{ color: "rgb(250, 164, 26)", size: "2em" }}
+                    >
+                      <RiEmotionHappyLine />
+                    </IconContext.Provider>
+                  </div>
+                  <div className="one-feeling">
+                    <input defaultValue="bad" onClick={getFeeling} />
+                    <IconContext.Provider
+                      value={{ color: "rgb(250, 164, 26)", size: "2em" }}
+                    >
+                      <RiEmotionUnhappyLine />
+                    </IconContext.Provider>
+                  </div>
+                  <div className="one-feeling">
+                    <input defaultValue="amazing" onClick={getFeeling} />
+                    <IconContext.Provider
+                      value={{ color: "rgb(250, 164, 26)", size: "2em" }}
+                    >
+                      <RiEmotionLaughLine />
+                    </IconContext.Provider>
+                  </div>
+                  <div className="one-feeling">
+                    <input defaultValue="sad" onClick={getFeeling} />
+                    <IconContext.Provider
+                      value={{ color: "rgb(250, 164, 26)", size: "2em" }}
+                    >
+                      <RiEmotionSadLine />
+                    </IconContext.Provider>
+                  </div>
                 </div>
-              ))}
-            </>
-          ) : null}
-        </div>
+              ) : null}
+              {friendsVisible ? (
+                <>
+                  {user.friends.map((friend, i) => (
+                    <div
+                      className="one-friend"
+                      onClick={() => getFriend(friend)}
+                      key={i}
+                    >
+                      <div
+                        className="div-friend"
+                        style={{ backgroundImage: `url(${friend.user_img})` }}
+                      />
+
+                      <h4>{friend.firstName}</h4>
+                    </div>
+                  ))}
+                </>
+              ) : null}
+            </div>
+          </>
+        )}
 
         <div className="modal-bottom">
           <div className="add-to-post">

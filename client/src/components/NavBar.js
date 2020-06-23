@@ -27,66 +27,66 @@ import {
 
 import "./navbar.css";
 
-export default function NavBar() {
+export default function NavBar(props) {
   const [notifications, setNotifications] = useState(3);
   const [messages, setMessages] = useState(1);
-  const [user, setUser] = useState();
-  const [groups, setGroups] = useState();
-  const [loading, setLoading] = useState(false);
+  // const [user, setUser] = useState();
+  // const [groups, setGroups] = useState();
+  // const [loading, setLoading] = useState(false);
 
-  const getUser = async () => {
-    setLoading(true);
-    let userId = localStorage.getItem("id");
-    const res = await axios
-      .get(`http://localhost:9090/users/${userId}`)
-      .catch((error) => console.log(error.response.data));
-    console.log(res);
-    setUser(res.data);
-    setLoading(false);
-  };
+  // const getUser = async () => {
+  //   setLoading(true);
+  //   let userId = localStorage.getItem("id");
+  //   const res = await axios
+  //     .get(`http://localhost:9090/users/${userId}`)
+  //     .catch((error) => console.log(error.response.data));
+  //   console.log(res);
+  //   setUser(res.data);
+  //   setLoading(false);
+  // };
 
-  const getGroups = async () => {
-    setLoading(true);
-    const res = await axios
-      .get(`http://localhost:9090/groups/all`)
-      .catch((error) => console.log(error.response.data));
-    console.log(res);
-    setGroups(res.data);
-    setLoading(false);
-  };
+  // const getGroups = async () => {
+  //   setLoading(true);
+  //   const res = await axios
+  //     .get(`http://localhost:9090/groups/all`)
+  //     .catch((error) => console.log(error.response.data));
+  //   console.log(res);
+  //   setGroups(res.data);
+  //   setLoading(false);
+  // };
 
-  useEffect(() => {
-    if (localStorage.getItem("id")) {
-      getUser();
-      getGroups();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("id")) {
+  //     getUser();
+  //     getGroups();
+  //   }
+  // }, []);
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
 
-  const token = localStorage.getItem("auth-token");
+  // const token = localStorage.getItem("auth-token");
 
-  const checkUserLoggedIn = async () => {
-    if (token) {
-      const tokenRes = await axios.post(
-        "http://localhost:9090/users/tokenIsValid",
+  // const checkUserLoggedIn = async () => {
+  //   if (token) {
+  //     const tokenRes = await axios.post(
+  //       "http://localhost:9090/users/tokenIsValid",
 
-        {
-          headers: {
-            "x-auth-token": token,
-          },
-        }
-      );
-      setLoggedIn(true);
-      // console.log(tokenRes);
-    } else {
-      setLoggedIn(false);
-    }
-  };
+  //       {
+  //         headers: {
+  //           "x-auth-token": token,
+  //         },
+  //       }
+  //     );
+  //     setLoggedIn(true);
+  //     // console.log(tokenRes);
+  //   } else {
+  //     setLoggedIn(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    checkUserLoggedIn();
-  }, []);
+  // useEffect(() => {
+  //   checkUserLoggedIn();
+  // }, []);
 
   return (
     <>
@@ -135,21 +135,21 @@ export default function NavBar() {
             </NavLink>
           </div> */}
         </div>
-        {user ? (
+        {props.user ? (
           <div className="right">
             <div className="img-container">
               <NavLink to="/profile">
-                {console.log("look here", user)}
+                {console.log("look here", props.user)}
                 <img
                   className="profile-img"
-                  src={user.user_img ? user.user_img : null}
+                  src={props.user.user_img ? props.user.user_img : null}
                   alt="Profile"
                 />
               </NavLink>
             </div>
 
             <div className="profile-name">
-              {user.firstName}
+              {props.user.firstName}
               <div className="add">
                 <AiOutlinePlusCircle />
               </div>
@@ -170,8 +170,8 @@ export default function NavBar() {
           <p>Loading...</p>
         )}
       </div>
-      <div className="App-intro">
-        {/* <Route path="/home" exact component={() => <StartPage user={user} />} /> */}
+      {/* <div className="App-intro">
+       
         {loggedIn ? (
           <Route
             path="/home"
@@ -181,9 +181,9 @@ export default function NavBar() {
         ) : (
           <Route exact path="/home" component={FirstPage} />
         )}
-        <Route path="/watch" component={Watch} />
+        <Route path="/watch" component={() => <Watch user={user} />} />
         <Route path="/marketplace" component={Marketplace} />
-        {/* <Route path="/groups" component={Groups} /> */}
+       
         <Route path="/profile" component={() => <Profile user={user} />} />
         <Route exact path={`/post/:postId`} component={SinglePostMarket} />
         <Route
@@ -192,10 +192,10 @@ export default function NavBar() {
           component={() => <SingleGroup groups={groups} />}
         />
         <Route path="/register" component={Register} />
-        {/* <Route path="/start" component={FirstPage} /> */}
+    
 
         <Redirect to="/home" />
-      </div>
+      </div> */}
     </>
   );
 }

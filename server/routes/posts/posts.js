@@ -13,7 +13,8 @@ router.post("/add/:userID", async (req, res) => {
 
   // console.log(req.body);
   const post = {
-    name: data.name,
+    firstName: data.firstName,
+    lastName: data.lastName,
     user_id: userID,
     feeling: data.feeling,
     text: data.text,
@@ -26,8 +27,9 @@ router.post("/add/:userID", async (req, res) => {
   if (data.tag && data.tag.length) {
     data.tag.forEach((tag) => {
       let tagTemp = {
-        id: tag.id,
-        name: tag.name,
+        user_id: tag.user_id,
+        firstName: tag.firstName,
+        lastName: tag.lastName,
         user_img: tag.user_img,
       };
       post.tag.push(tagTemp);
