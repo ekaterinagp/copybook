@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import StartPage from "../containers/StartPage";
 import Watch from "../containers/Watch";
 import Marketplace from "../containers/Marketplace";
-import Groups from "../containers/Groups";
+
 import Profile from "../containers/Profile";
 import { Route, NavLink, Redirect, Link } from "react-router-dom";
 import { IconContext } from "react-icons";
@@ -31,33 +31,8 @@ export default function NavBar() {
   const [notifications, setNotifications] = useState(3);
   const [messages, setMessages] = useState(1);
   const [user, setUser] = useState();
+  const [groups, setGroups] = useState();
   const [loading, setLoading] = useState(false);
-  //   {
-  //   id: 3,
-  //   name: "Anna",
-  //   user_img:
-  //     "https://cdn.pixabay.com/photo/2017/11/11/21/55/girl-2940655_960_720.jpg",
-  //   friends: [
-  //     {
-  //       id: 3,
-  //       name: "Gia Lia",
-  //       user_img:
-  //         "https://cdn.pixabay.com/photo/2016/12/19/21/36/winters-1919143_960_720.jpg",
-  //     },
-  //     {
-  //       id: 6,
-  //       name: "Lia Mart",
-  //       user_img:
-  //         "https://cdn.pixabay.com/photo/2017/06/24/02/56/art-2436545_960_720.jpg",
-  //     },
-  //     {
-  //       id: 6,
-  //       name: "Maya Pi",
-  //       user_img:
-  //         "https://cdn.pixabay.com/photo/2016/12/13/00/13/rabbit-1903016_960_720.jpg",
-  //     },
-  //   ],
-  // }
 
   const getUser = async () => {
     setLoading(true);
@@ -70,9 +45,20 @@ export default function NavBar() {
     setLoading(false);
   };
 
+  const getGroups = async () => {
+    setLoading(true);
+    const res = await axios
+      .get(`http://localhost:9090/groups/all`)
+      .catch((error) => console.log(error.response.data));
+    console.log(res);
+    setGroups(res.data);
+    setLoading(false);
+  };
+
   useEffect(() => {
     if (localStorage.getItem("id")) {
       getUser();
+      getGroups();
     }
   }, []);
 
@@ -190,17 +176,21 @@ export default function NavBar() {
           <Route
             path="/home"
             exact
-            component={() => <StartPage user={user} />}
+            component={() => <StartPage user={user} groups={groups} />}
           />
         ) : (
           <Route exact path="/home" component={FirstPage} />
         )}
         <Route path="/watch" component={Watch} />
         <Route path="/marketplace" component={Marketplace} />
-        <Route path="/groups" component={Groups} />
+        {/* <Route path="/groups" component={Groups} /> */}
         <Route path="/profile" component={() => <Profile user={user} />} />
         <Route exact path={`/post/:postId`} component={SinglePostMarket} />
-        <Route exact path={`/group/:groupId`} component={SingleGroup} />
+        <Route
+          exact
+          path={`/group/:groupId`}
+          component={() => <SingleGroup groups={groups} />}
+        />
         <Route path="/register" component={Register} />
         {/* <Route path="/start" component={FirstPage} /> */}
 

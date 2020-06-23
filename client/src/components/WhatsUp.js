@@ -9,12 +9,17 @@ import { IconContext } from "react-icons";
 export default function WhatsUp(props) {
   return (
     <div className="mind">
-      <div className="whatsup">
-        <img className="mini" src={props.user.user_img}></img>
-        <button className="add-post-button" onClick={props.onClick}>
-          <p>{`${props.user.firstName}, what are you up to?`}</p>
-        </button>
-      </div>
+      {props.user ? (
+        <div className="whatsup">
+          <img className="mini" src={props.user.user_img}></img>
+          <button className="add-post-button" onClick={props.onClick}>
+            <p>{`${props.user.firstName}, what are you up to?`}</p>
+          </button>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
+
       <div>
         <div className="icons-container">
           <IconContext.Provider value={{ color: "lightgreen", size: "1.5em" }}>

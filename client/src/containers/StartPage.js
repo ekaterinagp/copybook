@@ -16,31 +16,10 @@ import FirstPage from "../containers/StartPage";
 export default function StartPage(props) {
   console.log(props);
   const [show, setShow] = useState(false);
+  const [user, setUser] = useState(props.user);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
-  const [groups, setGroups] = useState([
-    {
-      id: 1,
-      name: "Group1",
-      desc: "desc of group1",
-      img: `https://cdn.pixabay.com/photo/2016/03/27/18/54/technology-1283624_960_720.jpg`,
-      members: 34,
-    },
-    {
-      id: 2,
-      name: "Group2",
-      desc: "desc of group2",
-      img: `https://cdn.pixabay.com/photo/2020/06/10/09/31/mockup-5281992_960_720.jpg`,
-      members: 55,
-    },
-    {
-      id: 3,
-      name: "Group3",
-      desc: "desc of group3",
-      img: `https://cdn.pixabay.com/photo/2020/06/12/14/06/mockup-5290462_960_720.jpg`,
-      members: 555,
-    },
-  ]);
+  const [groups, setGroups] = useState(props.groups);
   const [usersPosts, setUsersPost] = useState([
     {
       id: 1,
@@ -153,7 +132,12 @@ export default function StartPage(props) {
           <h2>Groups</h2>
           {groups
             ? groups.map((group, i) => (
-                <Link to={`/group/${group.id}`} key={i}>
+                <Link
+                  key={i}
+                  to={{
+                    pathname: `/group/${group.id}`,
+                  }}
+                >
                   <div className="group" key={i}>
                     <div>
                       <div
@@ -162,9 +146,9 @@ export default function StartPage(props) {
                       />
                     </div>
                     <div>
-                      <div className="group-name">{group.name}</div>
-                      <div className="group-name">{group.desc}</div>
-                      <div>{group.members} members</div>
+                      <div className="group-name">{group.title}</div>
+                      <div className="group-name">{group.short_desc}</div>
+                      <div>{group.members.length} members</div>
                     </div>
                   </div>
                 </Link>
@@ -173,15 +157,9 @@ export default function StartPage(props) {
         </div>
         <div className="main-middle">
           <Stories />
-          {!show && (
-            <WhatsUp
-              onClick={openModal}
-              img={props.user.user_img}
-              user={props.user.firstName}
-            />
-          )}
+          {!show && <WhatsUp onClick={openModal} user={props.user} />}
 
-          <ModalPost user={props.user} closeModal={closeModal} show={show} />
+          <ModalPost user={user} closeModal={closeModal} show={show} />
           <Posts
             posts={usersPosts}
             likeClick={handelLikeClick}
