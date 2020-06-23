@@ -47,11 +47,11 @@ router.post("/signup", async (req, res) => {
 
           let user = {
             firstName: name,
-            user_id: name + random,
+            user_id: name + Math.floor(Math.random() * 10000),
             lastName: lastName,
             email: email,
             password: hashedPassword,
-            user_img: null,
+            user_img: "",
             friends: [],
             groups: [],
             videos: [],
@@ -95,7 +95,7 @@ router.post("/login", async (req, res) => {
       bcrypt.compare(password, user.password).then((isMatch) => {
         if (!isMatch) return res.status(403).send({ error: "Wrong password" });
         jwt.sign(
-          { id: user.id },
+          { id: user.user_id },
           config.get("jwtSecret"),
           {
             expiresIn: 3600,
@@ -105,11 +105,11 @@ router.post("/login", async (req, res) => {
             res.json({
               token: token,
               user: {
-                id: user.id,
                 email: user.email,
-                name: user.name,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 user_img: user.user_img,
-                user_id: user.user_id,
+                id: user.user_id,
               },
             });
           }

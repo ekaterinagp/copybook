@@ -11,6 +11,7 @@ import ModalPost from "../components/ModalPost";
 
 import Stories from "../components/Stories";
 import { Link, useHistory } from "react-router-dom";
+import FirstPage from "../containers/StartPage";
 
 export default function StartPage(props) {
   console.log(props);
@@ -176,7 +177,7 @@ export default function StartPage(props) {
             <WhatsUp
               onClick={openModal}
               img={props.user.user_img}
-              user={props.user.name}
+              user={props.user.firstName}
             />
           )}
 

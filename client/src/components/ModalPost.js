@@ -185,14 +185,16 @@ export default function Modal(props) {
         <div className="modal-middle">
           <img className="mini" src={props.user.user_img} />
           <h4>
-            {props.user.name}{" "}
+            {props.user.firstName}{" "}
             {post.feeling ? <>is feeling {post.feeling}</> : null}
-            {post.tag && post.tag.length ? <> with {post.tag[0].name}</> : null}
+            {post.tag && post.tag.length ? (
+              <> with {post.tag[0].firstName}</>
+            ) : null}
           </h4>
         </div>
         <div className="text">
           <textarea
-            placeholder={`What's on your mind,${props.user.name}?`}
+            placeholder={`What's on your mind,${props.user.firstName}?`}
             onInput={getPostText}
           ></textarea>
           {!uploadImg ? null : (
