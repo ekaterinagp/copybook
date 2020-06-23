@@ -198,7 +198,7 @@ export default function NavBar() {
         <Route path="/watch" component={Watch} />
         <Route path="/marketplace" component={Marketplace} />
         <Route path="/groups" component={Groups} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/profile" component={() => <Profile user={user} />} />
         <Route exact path={`/post/:postId`} component={SinglePostMarket} />
         <Route exact path={`/group/:groupId`} component={SingleGroup} />
         <Route path="/register" component={Register} />

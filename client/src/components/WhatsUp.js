@@ -10,9 +10,9 @@ export default function WhatsUp(props) {
   return (
     <div className="mind">
       <div className="whatsup">
-        <img className="mini" src={props.img}></img>
+        <img className="mini" src={props.user.user_img}></img>
         <button className="add-post-button" onClick={props.onClick}>
-          <p>{`${props.user}, what are you up to?`}</p>
+          <p>{`${props.user.firstName}, what are you up to?`}</p>
         </button>
       </div>
       <div>
