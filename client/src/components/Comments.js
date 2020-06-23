@@ -8,10 +8,10 @@ export default function Comments(props) {
           {console.log(props.comments)}
 
           {props.comments.map(
-            ({ text, created, firstName, lastName, id, img }) => {
+            ({ text, created, firstName, lastName, id, user_img }) => {
               return (
                 <div className="mini-profile" key={text}>
-                  <img src={img} alt="" />
+                  <img src={user_img} alt="" />
                   <p className="comment-author">
                     {firstName} {lastName}
                   </p>

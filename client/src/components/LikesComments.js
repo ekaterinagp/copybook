@@ -36,11 +36,15 @@ export default function LikesComments(props) {
             color: "blue",
           }}
         >
-          <AiTwotoneLike /> <p> {props.likes.length} </p>
+          <AiTwotoneLike />{" "}
+          <p> {props.likes && props.likes.length ? props.likes.length : ""} </p>
         </IconContext.Provider>
       </div>
-      <div className="comments-put">{props.comments.length} comments</div>
-      <Comments comments={props.comments} />
+      <div className="comments-put">
+        {props.comments && props.comments.length ? props.comments.length : 0}{" "}
+        comments
+      </div>
+      <Comments comments={props.comments ? props.comments : 0} />
     </div>
   );
 }

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./css/start.css";
 
 import { AiOutlineGift } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import Contacts from "../components/Contacts";
+import axios from "axios";
 
 import WhatsUp from "../components/WhatsUp";
 import Posts from "../components/Posts";
@@ -19,88 +20,101 @@ export default function StartPage(props) {
   const [user, setUser] = useState(props.user);
   const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
+  const [loading, setLoading] = useState(false);
   const [groups, setGroups] = useState(props.groups);
-  const [usersPosts, setUsersPost] = useState([
-    {
-      id: 1,
-      name: "Jesper Hansen",
-      feelings: "Feeling good",
-      user_img:
-        "https://cdn.pixabay.com/photo/2012/10/10/10/36/moon-landing-60582_960_720.jpg",
-      img:
-        "https://cdn.pixabay.com/photo/2020/06/01/20/06/moon-5248235_960_720.jpg",
-      text: "text here about i am fun",
-      tag: [
-        {
-          id: 3,
-          name: "Betty Bett",
-          user_img:
-            "https://cdn.pixabay.com/photo/2019/12/04/10/22/engineer-4672332_960_720.jpg",
-        },
-        {
-          id: 7,
-          name: "Boris Becker",
-          user_img:
-            "https://cdn.pixabay.com/photo/2015/05/02/11/52/boris-becker-749855_960_720.jpg",
-        },
-      ],
-      comments: [
-        {
-          id: 1,
-          text: "Cool",
-          created: "01-03-2019",
-          firstName: "A",
-          lastName: "AA",
-          img:
-            "https://cdn.pixabay.com/photo/2016/11/01/03/27/girl-1787357_960_720.jpg",
-        },
-        {
-          id: 2,
-          text: "I like it",
-          created: "05-03-2019",
-          firstName: "B",
-          lastName: "BB",
-          img:
-            "https://cdn.pixabay.com/photo/2016/07/18/20/33/elephant-1526709_960_720.jpg",
-        },
-      ],
-      likes: [
-        {
-          id: 3,
-          firstName: "Anna",
-          lastName: "A",
-        },
-        {
-          id: 5,
-          firstName: "Ben",
-          lastName: "B",
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "Hanna Panna",
-      feelings: "Feeling bad",
-      user_img:
-        "https://cdn.pixabay.com/photo/2015/05/02/11/48/pope-749837_960_720.jpg",
-      img: "",
-      text: "text here about i am not fun",
-      comments: [],
-      likes: [],
-    },
-    {
-      id: 3,
-      name: "Anna A",
-      feelings: "Feeling sick of it",
-      user_img:
-        "https://cdn.pixabay.com/photo/2016/03/04/03/54/anna-may-wong-1235440_960_720.jpg",
-      img:
-        "https://cdn.pixabay.com/photo/2016/03/04/03/54/anna-may-wong-1235440_960_720.jpg",
-      text: "new picture",
-      comments: [],
-      likes: [],
-    },
-  ]);
+  const [usersPosts, setUsersPosts] = useState([]);
+  // const [usersPosts, setUsersPost] = useState([
+  //   {
+  //     id: 1,
+  //     name: "Jesper Hansen",
+  //     feelings: "Feeling good",
+  //     user_img:
+  //       "https://cdn.pixabay.com/photo/2012/10/10/10/36/moon-landing-60582_960_720.jpg",
+  //     img:
+  //       "https://cdn.pixabay.com/photo/2020/06/01/20/06/moon-5248235_960_720.jpg",
+  //     text: "text here about i am fun",
+  //     tag: [
+  //       {
+  //         id: 3,
+  //         name: "Betty Bett",
+  //         user_img:
+  //           "https://cdn.pixabay.com/photo/2019/12/04/10/22/engineer-4672332_960_720.jpg",
+  //       },
+  //       {
+  //         id: 7,
+  //         name: "Boris Becker",
+  //         user_img:
+  //           "https://cdn.pixabay.com/photo/2015/05/02/11/52/boris-becker-749855_960_720.jpg",
+  //       },
+  //     ],
+  //     comments: [
+  //       {
+  //         id: 1,
+  //         text: "Cool",
+  //         created: "01-03-2019",
+  //         firstName: "A",
+  //         lastName: "AA",
+  //         img:
+  //           "https://cdn.pixabay.com/photo/2016/11/01/03/27/girl-1787357_960_720.jpg",
+  //       },
+  //       {
+  //         id: 2,
+  //         text: "I like it",
+  //         created: "05-03-2019",
+  //         firstName: "B",
+  //         lastName: "BB",
+  //         img:
+  //           "https://cdn.pixabay.com/photo/2016/07/18/20/33/elephant-1526709_960_720.jpg",
+  //       },
+  //     ],
+  //     likes: [
+  //       {
+  //         id: 3,
+  //         firstName: "Anna",
+  //         lastName: "A",
+  //       },
+  //       {
+  //         id: 5,
+  //         firstName: "Ben",
+  //         lastName: "B",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Hanna Panna",
+  //     feelings: "Feeling bad",
+  //     user_img:
+  //       "https://cdn.pixabay.com/photo/2015/05/02/11/48/pope-749837_960_720.jpg",
+  //     img: "",
+  //     text: "text here about i am not fun",
+  //     comments: [],
+  //     likes: [],
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Anna A",
+  //     feelings: "Feeling sick of it",
+  //     user_img:
+  //       "https://cdn.pixabay.com/photo/2016/03/04/03/54/anna-may-wong-1235440_960_720.jpg",
+  //     img:
+  //       "https://cdn.pixabay.com/photo/2016/03/04/03/54/anna-may-wong-1235440_960_720.jpg",
+  //     text: "new picture",
+  //     comments: [],
+  //     likes: [],
+  //   },
+  // ]);
+
+  const getPosts = async () => {
+    setLoading(true);
+
+    const res = await axios
+      .get(`http://localhost:9090/posts/all`)
+      .catch((error) => console.log(error.response.data));
+    console.log(res);
+    setUsersPosts(res.data);
+    setLoading(false);
+  };
 
   const [birthday, setBirthday] = useState([
     {
@@ -113,14 +127,13 @@ export default function StartPage(props) {
   const unblockGroups = () => {
     document.querySelector("body").style.overflowY = "scroll";
   };
-  const [likes, setLikes] = useState(2);
 
   const handelLikeClick = (e) => {
-    setLikes(likes + 1);
     console.log(e.target.style);
     e.target.style.fill = "blue";
+    //take user, call api add like
   };
-
+  useEffect(() => getPosts(), []);
   return (
     <>
       <div className="container-3-columns">

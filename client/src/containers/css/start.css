@@ -396,3 +396,19 @@ div.main-middle .feel {
   display: grid;
   grid-template-columns: 0.1fr 5fr;
 }
+
+.up-post {
+  display: grid;
+  /* grid-template-rows: 2fr 2fr; */
+}
+
+.up {
+  display: inline-flex;
+}
+.feeling,
+.tag-post-one {
+  padding-left: 5px;
+}
+.text-post {
+  margin: 1rem 0 1rem 0;
+}

@@ -5,6 +5,13 @@ const fs = require("fs");
 const path = require("path");
 const router = require("express").Router();
 
+//@route get all posts
+
+router.get("/all", async (req, res) => {
+  const allPosts = await db.collection("posts").find().toArray();
+  return res.send(allPosts);
+});
+
 //@route to add post firebase
 
 router.post("/add/:userID", async (req, res) => {

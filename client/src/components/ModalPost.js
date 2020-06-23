@@ -149,11 +149,6 @@ export default function Modal(props) {
     if (imageAsFile) {
       imageUrl = await handleFireBaseUpload(e);
       console.log(imageAsUrl);
-      // let tempPost = {
-      //   img: imageAsUrl,
-      // };
-      // post.img = imageAsUrl.imgUrl;
-      // console.log(post.img);
     }
     const post = {
       img: imageUrl,
