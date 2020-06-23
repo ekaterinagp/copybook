@@ -1,5 +1,3 @@
-const { Db } = require("mongodb");
-
 const router = require("express").Router();
 
 //@route get saved videos

@@ -128,10 +128,22 @@ export default function StartPage(props) {
     document.querySelector("body").style.overflowY = "scroll";
   };
 
-  const handelLikeClick = (e) => {
+  const handelLikeClick = async (e) => {
     console.log(e.target.style);
+    console.log(e.target.id);
     e.target.style.fill = "blue";
+    let form = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      user_id: user.user_id,
+    };
+    console.log(form);
     //take user, call api add like
+    const addLike = await axios.post(
+      `http://localhost:9090/posts/addlike/${e.target.id}`,
+      form
+    );
+    getPosts();
   };
   useEffect(() => getPosts(), []);
   return (

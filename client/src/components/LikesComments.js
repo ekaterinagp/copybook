@@ -15,7 +15,7 @@ export default function LikesComments(props) {
       <div className="like icon-action">
         <IconContext.Provider value={{ size: "1.5em" }}>
           <p className="justify-end">Like </p>{" "}
-          <AiOutlineLike onClick={props.handleClick} />
+          <AiOutlineLike id={props.post_id} onClick={props.handleClick} />
         </IconContext.Provider>
       </div>
       <div className="comment icon-action">

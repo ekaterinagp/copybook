@@ -48,6 +48,7 @@ export default function Posts(props) {
               <LikesComments
                 handleClick={props.likeClick}
                 likes={post.likes}
+                post_id={post.post_id}
                 comments={post.comments}
               />
             </div>

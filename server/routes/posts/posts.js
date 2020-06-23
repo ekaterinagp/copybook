@@ -1,7 +1,8 @@
 const formidable = require("formidable");
 const detect = require("detect-file-type");
-const { v1: uuidv1 } = require("uuid"); //npm uuid
+const { v1: uuidv1 } = require("uuid");
 const fs = require("fs");
+
 const path = require("path");
 const router = require("express").Router();
 
@@ -12,6 +13,33 @@ router.get("/all", async (req, res) => {
   return res.send(allPosts);
 });
 
+//@route add like to post
+router.post("/addlike/:id", async (req, res) => {
+  const postID = req.params.id;
+  const { firstName, lastName, user_id } = req.body;
+  if ((firstName, lastName, user_id)) {
+    try {
+      const newLike = await db.collection("posts").updateOne(
+        { post_id: postID },
+        {
+          $push: {
+            likes: {
+              firstName: firstName,
+              lastName: lastName,
+              user_id: user_id,
+            },
+          },
+        }
+      );
+      return res.send("succsess");
+    } catch (error) {
+      return res.status(500).send({ message: error.message });
+    }
+  } else {
+    return res.status(403).send({ error: "all fields are required" });
+  }
+});
+
 //@route to add post firebase
 
 router.post("/add/:userID", async (req, res) => {
@@ -20,6 +48,7 @@ router.post("/add/:userID", async (req, res) => {
 
   // console.log(req.body);
   const post = {
+    post_id: uuidv1(),
     firstName: data.firstName,
     lastName: data.lastName,
     user_id: userID,
