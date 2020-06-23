@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const config = require("config");
 
 const app = express();
 const port = process.env.PORT || 9090;
@@ -35,8 +36,10 @@ process.on("uncaughtException", (error, data) => {
 });
 
 const postRoutes = require("./routes/posts/posts.js");
+const userRoutes = require("./routes/users/users.js");
 // app.post("/posts", postRoutes);
 app.use("/posts", postRoutes);
+app.use("/users", userRoutes);
 
 app.listen(port, (err) => {
   if (err) {
