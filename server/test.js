@@ -23,31 +23,31 @@ var randomEmail = faker.internet.email(); // Kassandra.Haley@erich.biz
 //   items: [],
 // };
 
-const posts = [];
+// const posts = [];
 
-for (let i = 0; i < 50; i++) {
-  let post = {
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    post_id: uuidv1(),
+// for (let i = 0; i < 50; i++) {
+//   let post = {
+//     firstName: faker.name.firstName(),
+//     lastName: faker.name.lastName(),
+//     post_id: uuidv1(),
 
-    user_img: faker.image.avatar(),
+//     user_img: faker.image.avatar(),
 
-    img: faker.image.image(),
+//     img: faker.image.image(),
 
-    feeling: faker.random.word(),
-    text: faker.random.words(),
+//     feeling: faker.random.word(),
+//     text: faker.random.words(),
 
-    likes: [],
-    comments: [],
-  };
-  posts.push(post);
-}
+//     likes: [],
+//     comments: [],
+//   };
+//   posts.push(post);
+// }
 
-posts.forEach((post) => {
-  post.user_id = post.firstName + Math.floor(Math.random() * 10000);
-});
+// posts.forEach((post) => {
+//   post.user_id = post.firstName + Math.floor(Math.random() * 10000);
+// });
 
-console.log(posts);
+// console.log(posts);
 
 module.exports = posts;

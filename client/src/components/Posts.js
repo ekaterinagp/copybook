@@ -1,11 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import "../containers/css/start.css";
 import LikesComments from "./LikesComments";
+import axios from "axios";
 
 export default function Posts(props) {
+  const [loading, setLoading] = useState(false);
+  const [init, setInit] = useState(true);
   console.log(props.posts);
   const color = props.color;
   const usersPosts = props.posts;
+
+  const getPosts = async () => {
+    setLoading(true);
+
+    const res = await axios
+      .get(`http://localhost:9090/posts/all`)
+      .catch((error) => console.log(error.response.data));
+    console.log(res);
+    if (init) {
+      res.data.forEach((one) => {
+        one.commentsAreOpen = false;
+      });
+    } else {
+      props.usersPosts.forEach((post) => {
+        let found = res.data.find((one) => one.post_id === post.post_id);
+        found.commentsAreOpen = post.commentsAreOpen;
+      });
+    }
+    props.setUsersPosts(res.data);
+    setLoading(false);
+    console.log("get posts run");
+  };
+
+  const toggleComments = (e) => {
+    let id = e.target.id;
+    console.log("opencomments", id);
+    props.posts.forEach((one) => {
+      if (one.post_id === id) {
+        console.log(one);
+        one.commentsAreOpen = !one.commentsAreOpen;
+      }
+    });
+    props.setUsersPosts([...props.posts]);
+  };
 
   return (
     <div className="posts" style={{ backgroundColor: color }}>
@@ -43,13 +80,18 @@ export default function Posts(props) {
                 </div>
               </div>
 
-              {console.log(post)}
-              {console.log(post.comments, post.likes)}
+              {/* {console.log(post)}
+              {console.log(post.comments, post.likes)} */}
               <LikesComments
                 handleClick={props.likeClick}
                 likes={post.likes}
                 post_id={post.post_id}
                 comments={post.comments}
+                getPosts={getPosts}
+                user={props.user}
+                posts={usersPosts}
+                toggleComments={toggleComments}
+                commentsAreOpen={post.commentsAreOpen ? true : false}
               />
             </div>
           ))

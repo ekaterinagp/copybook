@@ -31,17 +31,6 @@ export default function Modal(props) {
 
   const [disabled, setDisabled] = useState(true);
 
-  const getUser = async () => {
-    setLoading(true);
-    let userId = localStorage.getItem("id");
-    const res = await axios
-      .get(`http://localhost:9090/users/${userId}`)
-      .catch((error) => console.log(error.response.data));
-    console.log(res);
-    setUser(res.data);
-    setLoading(false);
-  };
-
   // const [post, setPost] = useState({
   //   firstName: user.firstName,
   //   lastName: user.lastName,
@@ -54,7 +43,19 @@ export default function Modal(props) {
   //   likes: [],
   // });
 
-  useEffect(() => getUser(), []);
+  useEffect(() => {
+    const getUser = async () => {
+      setLoading(true);
+      let userId = localStorage.getItem("id");
+      const res = await axios
+        .get(`http://localhost:9090/users/${userId}`)
+        .catch((error) => console.log(error.response.data));
+      console.log(res);
+      setUser(res.data);
+      setLoading(false);
+    };
+    getUser();
+  }, []);
 
   const handleImageAsFile = (e) => {
     const image = e.target.files[0];

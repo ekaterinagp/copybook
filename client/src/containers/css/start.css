@@ -412,3 +412,52 @@ div.main-middle .feel {
 .text-post {
   margin: 1rem 0 1rem 0;
 }
+
+.delete-comment {
+  float: right;
+  background-color: #f02848;
+  border-radius: 15px;
+  padding: 5px;
+  color: white;
+  width: 20%;
+  display: grid;
+  justify-self: end;
+  text-align: center;
+  margin: 10px;
+}
+
+.comment-single-structure {
+  display: grid;
+  grid-template-columns: 0.1fr 0.2fr 1fr;
+  padding: 10px;
+}
+
+.comment-structure {
+  display: grid;
+  /* grid-template-columns: 1fr 20fr; */
+  grid-gap: 1rem;
+  /* padding: 10px; */
+  border: 1px grey solid;
+  border-radius: 15px;
+  /* padding: 15px; */
+  margin: 10px;
+  position: relative;
+}
+
+.add-comment-div .form-style-6 {
+  max-width: 100%;
+}
+
+.add-comment-button {
+  box-shadow: none;
+  border: none;
+  width: 40%;
+  padding: 10px;
+  background-color: #acadaf;
+  margin: 10px 10px 0 20px;
+  font-size: large;
+  color: white;
+  display: grid;
+  justify-self: center;
+  border-radius: 15px;
+}
