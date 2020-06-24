@@ -168,7 +168,7 @@ export default function Profile(props) {
           <div className="profile-top">
             <div
               className="cover"
-              style={{ backgroundImage: `url(${user.cover_imh})` }}
+              style={{ backgroundImage: `url(${user.cover_img})` }}
             >
               {" "}
               <div className="img-icon-profile">
