@@ -101,8 +101,11 @@ function App() {
           component={() => <Watch user={user} getUser={getUser} />}
         />
         <Route path="/marketplace" component={Marketplace} />
-        {/* <Route path="/groups" component={Groups} /> */}
-        <Route path="/profile" component={() => <Profile user={user} />} />
+
+        <Route
+          path="/profile"
+          component={() => <Profile user={user} setUser={setUser} />}
+        />
         <Route exact path={`/post/:postId`} component={SinglePostMarket} />
         <Route
           exact

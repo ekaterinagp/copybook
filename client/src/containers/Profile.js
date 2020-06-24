@@ -9,6 +9,7 @@ import { IconContext } from "react-icons";
 import WhatsUp from "../components/WhatsUp";
 import Posts from "../components/Posts";
 import axios from "axios";
+import Debouncer from "../components/Debouncer";
 
 export default function Profile(props) {
   console.log(props.user);
@@ -17,6 +18,8 @@ export default function Profile(props) {
   let loggedIn = localStorage.getItem("id");
   const userID = localStorage.getItem("id");
   const [loading, setLoading] = useState(true);
+  const [visibleDetails, setVisibleDetails] = useState(false);
+  const [temp, setTemp] = useState();
 
   const [posts, setPosts] = useState();
 
@@ -26,14 +29,37 @@ export default function Profile(props) {
   };
 
   useEffect(() => {
-    const getPostsByUser = async (id) => {
-      const posts = await axios.get(`http://localhost:9090/posts/${id}`);
-      console.log(posts);
-      setPosts(posts.data);
-    };
-    getPostsByUser(user.user_id);
+    if (user) {
+      const getPostsByUser = async (id) => {
+        const posts = await axios.get(`http://localhost:9090/posts/${id}`);
+        console.log(posts);
+        setPosts(posts.data);
+      };
+      getPostsByUser(user.user_id);
+    }
   }, []);
 
+  const handelClickEdit = () => {
+    setVisibleDetails(true);
+  };
+
+  const getNewData = (e) => {
+    e.preventDefault();
+    console.log(e.target.value, e.target.id);
+    if (e.target.id == "lives") {
+      setUser({ ...user, lives: e.target.value });
+    }
+    if (e.target.id == "works") {
+      setUser({ ...user, works: e.target.value });
+    }
+  };
+
+  const saveData = () => {
+    console.log(temp);
+    props.setUser(user);
+    // props.setUser({ ...user, works: e.target.value });
+    // props.setUser({ ...temp });
+  };
   return (
     <>
       {!user ? (
@@ -90,13 +116,38 @@ export default function Profile(props) {
                   </IconContext.Provider>{" "}
                   <p>Lives in {user.lives}</p>
                 </div>
-                <button className="edit-intro">Edit Details</button>
+                <div
+                  className="edit-details"
+                  style={{
+                    display: visibleDetails ? "block" : "none",
+                  }}
+                >
+                  <input
+                    placeholder="works"
+                    onChange={getNewData}
+                    id="works"
+                  ></input>
+                  <input
+                    placeholder="lives"
+                    onMouseLeave={getNewData}
+                    id="lives"
+                  ></input>
+                </div>
+                {visibleDetails ? (
+                  <button className="edit-intro" onClick={saveData}>
+                    Save
+                  </button>
+                ) : (
+                  <button className="edit-intro" onClick={handelClickEdit}>
+                    Edit Details
+                  </button>
+                )}
               </div>
               <div className="photo">
                 <h2>Photo</h2>
                 <div className="photo-container">
                   {" "}
-                  {user.photos.length ? (
+                  {user.photos && user.photos.length ? (
                     user.photos.map((photo, i) => (
                       <div
                         key={i}
@@ -113,7 +164,7 @@ export default function Profile(props) {
                 <h2>Friends</h2>
                 <div className="friends-container">
                   {" "}
-                  {user.friends.length ? (
+                  {user.friends && user.friends.length ? (
                     user.friends.map((friend, i) => (
                       <div key={i}>
                         <Link to={`/friend/${friend.user_id}`}>

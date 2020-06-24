@@ -187,3 +187,8 @@
 .button-text {
   padding-top: 8px;
 }
+
+.edit-details input {
+  padding: 5px;
+  margin: 10px;
+}
