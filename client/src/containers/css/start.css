@@ -482,3 +482,19 @@ div.main-middle .feel {
   grid-template-columns: 2fr 2fr;
   grid-gap: 1rem;
 }
+
+.remove-friend {
+  text-align: center;
+}
+
+.remove-friend button {
+  box-shadow: none;
+  border: none;
+  max-width: 15%;
+  /* width: 30%; */
+  padding: 10px;
+  background-color: #d8dadf;
+  margin: 10px 10px 0 20px;
+  font-size: large;
+  border-radius: 15px;
+}

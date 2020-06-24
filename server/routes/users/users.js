@@ -4,9 +4,11 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const auth = require("../../middleware/auth");
+const ObjectId = require("mongodb").ObjectId;
 
 const jwSecret = config.get("jwtSecret");
 const { v1: uuidv1 } = require("uuid");
+const { ObjectID } = require("mongodb");
 
 //@router get one user
 router.get("/:id", async (req, res) => {
@@ -183,6 +185,29 @@ router.post("/tokenIsValid", async (req, res) => {
     return res.json(true);
   } catch (error) {
     res.json({ error: error.message });
+  }
+});
+
+//@router delete from friends add Auth
+router.put("/deletefriend/:id", async (req, res) => {
+  const friend_id = req.params.id;
+  const { email } = req.body;
+
+  try {
+    const result = db
+      .collection("users")
+      .updateOne(
+        { email: email },
+        { $pull: { friends: { user_id: friend_id } } },
+        (err, dbResponse) => {
+          if (err) {
+            return res.status(500).send({ error: err });
+          }
+          return res.status(200).send({ response: "Friend deleted" });
+        }
+      );
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
   }
 });
 

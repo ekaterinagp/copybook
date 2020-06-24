@@ -44,12 +44,25 @@ export default function SingleFriend(props) {
     e.target.style.fill = "blue";
   };
 
+  const removeFriend = async (id) => {
+    console.log(id);
+    // const token = localStorage.getItem("token");
+    const data = {
+      email: mainUser.email,
+    };
+    const res = await axios
+      .put(`http://localhost:9090/users/deletefriend/${id}`, data)
+      .catch((error) => console.log(error.response.data));
+
+    history.push("/home");
+  };
+
   return (
     <>
       {!user ? (
         <p>Loading</p>
       ) : (
-        <div className="profile-container">
+        <div className="profile-container-2">
           <div className="profile-top">
             <div
               className="cover"
@@ -64,6 +77,11 @@ export default function SingleFriend(props) {
               {user.firstName} {user.lastName}
             </h2>
             <div className="bio">{user.bio}</div>
+            <div className="remove-friend">
+              <button onClick={() => removeFriend(user.user_id)}>
+                Remove from friends
+              </button>
+            </div>
           </div>
           <div className="profile-bottom">
             <div className="left-part">
@@ -123,7 +141,7 @@ export default function SingleFriend(props) {
                       </div>
                     ))
                   ) : (
-                    <h3>No photos yet</h3>
+                    <h3>No friends yet</h3>
                   )}
                 </div>
               </div>
