@@ -461,3 +461,24 @@ div.main-middle .feel {
   justify-self: center;
   border-radius: 15px;
 }
+
+.bio {
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+}
+
+.on-profile {
+  margin-top: 10rem;
+  margin-left: 69rem;
+  width: 10rem;
+  height: 10rem;
+  border: 3px solid white;
+  border-radius: 50%;
+}
+
+.people-container {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  grid-gap: 1rem;
+}

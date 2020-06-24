@@ -23,6 +23,7 @@ export default function StartPage(props) {
   const [loading, setLoading] = useState(false);
   const [groups, setGroups] = useState(props.groups);
   const [usersPosts, setUsersPosts] = useState([]);
+  const [people, setPeople] = useState();
 
   const [birthday, setBirthday] = useState([
     {
@@ -55,7 +56,8 @@ export default function StartPage(props) {
       .get(`http://localhost:9090/posts/all`)
       .catch((error) => console.log(error.response.data));
     console.log(res);
-    setUsersPosts(res.data);
+    let modified = res.data.reverse();
+    setUsersPosts(modified);
     setLoading(false);
     // getPosts();
   };
@@ -68,13 +70,57 @@ export default function StartPage(props) {
         .get(`http://localhost:9090/posts/all`)
         .catch((error) => console.log(error.response.data));
       console.log(res);
-      setUsersPosts(res.data);
+      let postModified = res.data.reverse();
+      setUsersPosts(postModified);
       setLoading(false);
       console.log("get posts run");
     };
 
     getPosts();
   }, []);
+  const getPeople = async () => {
+    setLoading(true);
+
+    const res = await axios
+      .get(`http://localhost:9090/users/`)
+      .catch((error) => console.log(error.response.data));
+    console.log(res.data);
+    // let postModified = res.data.reverse();
+    // setUsersPosts(postModified);
+    let modified = res.data.filter((one) => one.user_id != user.user_id);
+    console.log(modified);
+    const notFriends = [];
+    //ASK HONEY BUNNY
+    modified.forEach((one) => {
+      user.friends.forEach((friend) => {
+        if (modified.user_id != friend.user_id) {
+          notFriends.push(one);
+        }
+      });
+    });
+    console.log(user.friends);
+
+    setPeople(modified);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getPeople();
+  }, []);
+
+  const addFriend = async (person) => {
+    console.log(person);
+    let data = {
+      user_id: user.user_id,
+      friend_firstName: person.firstName,
+      friend_lastName: person.lastName,
+      friend_id: person.user_id,
+      friend_img: person.user_img,
+    };
+    const res = await axios.post(`http://localhost:9090/users/add/`, data);
+    console.log(res);
+    getPeople();
+  };
   return (
     <>
       <div className="container-3-columns">
@@ -108,12 +154,39 @@ export default function StartPage(props) {
                 </Link>
               ))
             : null}
+          <h2>People</h2>
+          <div className="people-container">
+            {people && people.length ? (
+              people.map((person, i) => (
+                <div key={i}>
+                  <div
+                    className="photo-one"
+                    id={person.user_id}
+                    style={{
+                      backgroundImage: `url(${person.user_img})`,
+                    }}
+                  ></div>{" "}
+                  <h4>
+                    {person.firstName} {person.lastName}
+                  </h4>
+                  <button onClick={() => addFriend(person)}>Add friend</button>
+                </div>
+              ))
+            ) : (
+              <p>No found</p>
+            )}
+          </div>
         </div>
         <div className="main-middle">
           <Stories />
           {!show && <WhatsUp onClick={openModal} user={props.user} />}
 
-          <ModalPost user={user} closeModal={closeModal} show={show} />
+          <ModalPost
+            user={user}
+            closeModal={closeModal}
+            show={show}
+            setUsersPosts={setUsersPosts}
+          />
           <Posts
             posts={usersPosts}
             likeClick={handelLikeClick}

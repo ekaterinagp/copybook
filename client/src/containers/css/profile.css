@@ -9,8 +9,14 @@
 
 .profile-top {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  position: relative;
+  height: 400px;
+  padding-bottom: 7rem;
+}
+
+.profile-top-user {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   display: grid;
-  /* grid-template-rows: 4fr 1fr; */
 }
 
 .cover {

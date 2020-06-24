@@ -35,7 +35,7 @@ export default function Comments(props) {
                     </p>
                     <p className="comment-text">{text}</p>
                   </div>
-                  {user.user_img == user_img ? (
+                  {user && user.user_img == user_img ? (
                     <p
                       className="delete-comment"
                       onClick={deleteComment}

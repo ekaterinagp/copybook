@@ -7,11 +7,23 @@ const path = require("path");
 const router = require("express").Router();
 const ObjectId = require("mongodb").ObjectId;
 const auth = require("../../middleware/auth");
+
 //@route get all posts
 
 router.get("/all", async (req, res) => {
   const allPosts = await db.collection("posts").find().toArray();
   return res.send(allPosts);
+});
+
+//@route get all posts by one user
+
+router.get("/:id", async (req, res) => {
+  const user_id = req.params.id;
+  const posts = await db
+    .collection("posts")
+    .find({ user_id: user_id })
+    .toArray();
+  return res.send(posts);
 });
 
 //@route add like to post

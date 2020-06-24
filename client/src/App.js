@@ -18,6 +18,7 @@ import SingleGroup from "./containers/SingleGroup";
 import FirstPage from "./containers/FirstPage";
 import axios from "axios";
 import Register from "./containers/Register";
+import SingleFriend from "./containers/SingleFriend";
 
 import StartPage from "./containers/StartPage";
 
@@ -110,7 +111,11 @@ function App() {
         />
         <Route path="/register" component={Register} />
         {/* <Route path="/start" component={FirstPage} /> */}
-
+        <Route
+          exact
+          path={`/friend/:friendId`}
+          component={() => <SingleFriend user={user} />}
+        />
         <Redirect to="/home" />
       </div>
       {/* <BrowserRouter>

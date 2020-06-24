@@ -27,7 +27,8 @@ export default function Posts(props) {
         found.commentsAreOpen = post.commentsAreOpen;
       });
     }
-    props.setUsersPosts(res.data);
+    let postsModified = res.data.reverse();
+    props.setUsersPosts(postsModified);
     setLoading(false);
     console.log("get posts run");
   };

@@ -117,19 +117,6 @@ export default function Modal(props) {
     if (e.target.value.length > 1 || uploadImg) {
       setDisabled(false);
       setText(e.target.value);
-
-      // let postTemp = {
-      //   img: imageAsUrl ? imageAsUrl.imgUrl : "",
-      //   feeling: "",
-      //   tag: [],
-      //   firstName: user.firstName,
-      //   lastName: user.lastName,
-      //   user_img: user.user_img,
-      //   text: e.target.value,
-      // };
-      // setPost({ ...postTemp });
-
-      // console.log(post);
     }
   };
 
@@ -141,6 +128,7 @@ export default function Modal(props) {
       post
     );
     console.log(res);
+    props.setUsersPosts();
   };
 
   const addPost = async (e) => {

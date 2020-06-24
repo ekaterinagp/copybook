@@ -10,29 +10,39 @@ import WhatsUp from "../components/WhatsUp";
 import Posts from "../components/Posts";
 import axios from "axios";
 
-export default function Profile(props) {
-  console.log(props.user);
-  const [user, setUser] = useState(props.user);
+export default function SingleFriend(props) {
+  const [mainUser, setMainUser] = useState(props.user);
   const history = useHistory();
+  const friendId = window.location.href.match("([^/]+$)")[0];
+  console.log(friendId);
   let loggedIn = localStorage.getItem("id");
   const userID = localStorage.getItem("id");
   const [loading, setLoading] = useState(true);
-
+  const [user, setUser] = useState();
   const [posts, setPosts] = useState();
+
+  useEffect(() => {
+    const getUserById = async (friendId) => {
+      const friend = await axios.get(`http://localhost:9090/users/${friendId}`);
+      console.log(friend);
+      setUser(friend.data);
+    };
+    getUserById(friendId);
+  }, []);
+
+  useEffect(() => {
+    const getPostsByUser = async (friendId) => {
+      const posts = await axios.get(`http://localhost:9090/posts/${friendId}`);
+      console.log(posts);
+      setPosts(posts.data);
+    };
+    getPostsByUser(friendId);
+  }, []);
 
   const handelLikeClick = (e) => {
     console.log(e.target.style);
     e.target.style.fill = "blue";
   };
-
-  useEffect(() => {
-    const getPostsByUser = async (id) => {
-      const posts = await axios.get(`http://localhost:9090/posts/${id}`);
-      console.log(posts);
-      setPosts(posts.data);
-    };
-    getPostsByUser(user.user_id);
-  }, []);
 
   return (
     <>
@@ -40,38 +50,20 @@ export default function Profile(props) {
         <p>Loading</p>
       ) : (
         <div className="profile-container">
-          <div className="profile-top-user">
+          <div className="profile-top">
             <div
               className="cover"
               style={{ backgroundImage: `url(${user.cover_img})` }}
             >
-              {" "}
               <div className="img-icon-profile">
-                <img className="img-on-profile" src={user.user_img} />
-                <IconContext.Provider value={{ size: "2em" }}>
-                  <MdPhotoCamera />
-                </IconContext.Provider>
-              </div>
-              <div className="button-change-cover">
-                <IconContext.Provider value={{ size: "2em" }}>
-                  <button>
-                    <MdPhotoCamera /> <p>Edit Cover Photo</p>
-                  </button>
-                </IconContext.Provider>
+                <img className="on-profile" src={user.user_img} />
               </div>
             </div>
 
             <h2 className="profile-name-full">
               {user.firstName} {user.lastName}
             </h2>
-            <IconContext.Provider value={{ size: "2em" }}>
-              {" "}
-              <button className="editProfile">
-                {" "}
-                <MdEdit />
-                <p className="button-text"> Edit Profile </p>
-              </button>{" "}
-            </IconContext.Provider>
+            <div className="bio">{user.bio}</div>
           </div>
           <div className="profile-bottom">
             <div className="left-part">
@@ -90,7 +82,7 @@ export default function Profile(props) {
                   </IconContext.Provider>{" "}
                   <p>Lives in {user.lives}</p>
                 </div>
-                <button className="edit-intro">Edit Details</button>
+                {/* <button className="edit-intro">Edit Details</button> */}
               </div>
               <div className="photo">
                 <h2>Photo</h2>
@@ -131,13 +123,13 @@ export default function Profile(props) {
                       </div>
                     ))
                   ) : (
-                    <h3>No friends yet</h3>
+                    <h3>No photos yet</h3>
                   )}
                 </div>
               </div>
             </div>
             <div className="right-part">
-              <WhatsUp user={user} />
+              {/* <WhatsUp user={user} /> */}
               <h2>Posts</h2>
               <Posts
                 posts={posts}

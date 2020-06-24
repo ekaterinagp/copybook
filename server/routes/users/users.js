@@ -15,6 +15,12 @@ router.get("/:id", async (req, res) => {
   return res.send(user);
 });
 
+//@router get all users
+router.get("/", async (req, res) => {
+  const allUsers = await db.collection("users").find().toArray();
+  return res.send(allUsers);
+});
+
 //@route signup
 
 router.post("/signup", async (req, res) => {
@@ -75,6 +81,37 @@ router.post("/signup", async (req, res) => {
       .send({ error: "Password and repeated password are not the same" });
   } else {
     return res.status(403).send({ error: "All fields are required" });
+  }
+});
+
+//@router add friend
+router.post("/add", async (req, res) => {
+  const {
+    user_id,
+    friend_id,
+    friend_firstName,
+    friend_lastName,
+    friend_img,
+  } = req.body;
+  if ((user_id, friend_id)) {
+    try {
+      const newFriend = await db.collection("users").updateOne(
+        { user_id: user_id },
+        {
+          $push: {
+            friends: {
+              user_id: friend_id,
+              firstName: friend_firstName,
+              lastName: friend_lastName,
+              user_img: friend_img,
+            },
+          },
+        }
+      );
+      return res.send("succsess");
+    } catch (error) {
+      return res.status(500).send({ message: error.message });
+    }
   }
 });
 
