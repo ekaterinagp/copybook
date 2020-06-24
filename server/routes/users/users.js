@@ -188,6 +188,63 @@ router.post("/tokenIsValid", async (req, res) => {
   }
 });
 
+//@router update user details
+router.put("/update-details", async (req, res) => {
+  const { lives, works, user_id } = req.body;
+  if (!lives) {
+    try {
+      const result = await db
+        .collection("users")
+        .findOneAndUpdate(
+          { user_id: user_id },
+          { $set: { works: works } },
+          (err, dbResponse) => {
+            if (err) {
+              return res.status(500).send({ error: err });
+            }
+            return res.status(200).send({ response: "Updated works" });
+          }
+        );
+    } catch (error) {
+      return res.status(500).send({ message: error.message });
+    }
+  } else if (!works) {
+    try {
+      const result = await db
+        .collection("users")
+        .findOneAndUpdate(
+          { user_id: user_id },
+          { $set: { lives: lives } },
+          (err, dbResponse) => {
+            if (err) {
+              return res.status(500).send({ error: err });
+            }
+            return res.status(200).send({ response: "Updated lives" });
+          }
+        );
+    } catch (error) {
+      return res.status(500).send({ message: error.message });
+    }
+  } else {
+    try {
+      const result = await db
+        .collection("users")
+        .findOneAndUpdate(
+          { user_id: user_id },
+          { $set: { lives: lives, works: works } },
+          (err, dbResponse) => {
+            if (err) {
+              return res.status(500).send({ error: err });
+            }
+            return res.status(200).send({ response: "Updated both" });
+          }
+        );
+    } catch (error) {
+      return res.status(500).send({ message: error.message });
+    }
+  }
+});
+
 //@router delete from friends add Auth
 router.put("/deletefriend/:id", async (req, res) => {
   const friend_id = req.params.id;

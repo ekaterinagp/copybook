@@ -54,11 +54,20 @@ export default function Profile(props) {
     }
   };
 
-  const saveData = () => {
+  const saveData = async () => {
     console.log(temp);
     props.setUser(user);
-    // props.setUser({ ...user, works: e.target.value });
-    // props.setUser({ ...temp });
+    let data = {
+      lives: user.lives,
+      works: user.works,
+      user_id: user.user_id,
+    };
+
+    const res = await axios.put(
+      `http://localhost:9090/users/update-details`,
+      data
+    );
+    console.log(res);
   };
   return (
     <>
