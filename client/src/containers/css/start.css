@@ -498,3 +498,30 @@ div.main-middle .feel {
   font-size: large;
   border-radius: 15px;
 }
+
+.one-chat {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  position: absolute;
+  width: 300px;
+  height: 400px;
+  bottom: 0;
+  z-index: 10;
+  background-color: white;
+  border-radius: 15px;
+  overflow-y: scroll;
+}
+
+.chat-top {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr;
+  padding: 10px;
+  font-size: 1rem;
+  color: #555;
+  background: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+.chat-type {
+  position: absolute;
+  bottom: 0;
+}

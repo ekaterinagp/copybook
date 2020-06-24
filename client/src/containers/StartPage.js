@@ -87,18 +87,12 @@ export default function StartPage(props) {
     console.log(res.data);
     // let postModified = res.data.reverse();
     // setUsersPosts(postModified);
-    let modified = res.data.filter((one) => one.user_id != user.user_id);
+    const friendsIDs = user.friends.map((one) => one.user_id);
+    console.log(friendsIDs);
+    let modified = res.data
+      .filter((one) => one.user_id != user.user_id)
+      .filter((one) => !friendsIDs.includes(one.user_id));
     console.log(modified);
-    const notFriends = [];
-    //ASK HONEY BUNNY
-    modified.forEach((one) => {
-      user.friends.forEach((friend) => {
-        if (modified.user_id != friend.user_id) {
-          notFriends.push(one);
-        }
-      });
-    });
-    console.log(user.friends);
 
     setPeople(modified);
     setLoading(false);
@@ -120,6 +114,7 @@ export default function StartPage(props) {
     const res = await axios.post(`http://localhost:9090/users/add/`, data);
     console.log(res);
     getPeople();
+    props.getUser();
   };
   return (
     <>
@@ -215,7 +210,7 @@ export default function StartPage(props) {
           </div>
           <div className="friends-activity">
             <h2>Contacts</h2>
-            <Contacts />
+            <Contacts user={user} />
           </div>
         </div>
       </div>

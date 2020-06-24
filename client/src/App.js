@@ -91,7 +91,9 @@ function App() {
           <Route
             path="/home"
             exact
-            component={() => <StartPage user={user} groups={groups} />}
+            component={() => (
+              <StartPage user={user} groups={groups} getUser={getUser} />
+            )}
           />
         ) : (
           <Route exact path="/home" component={FirstPage} />

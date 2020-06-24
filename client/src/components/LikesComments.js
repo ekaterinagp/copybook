@@ -9,7 +9,7 @@ import Comments from "../components/Comments";
 import { IconContext } from "react-icons";
 
 export default function LikesComments(props) {
-  console.log(props);
+  // console.log(props);
 
   // console.log(props);
   return (

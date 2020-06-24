@@ -99,14 +99,14 @@ export default function Profile(props) {
             <h2 className="profile-name-full">
               {user.firstName} {user.lastName}
             </h2>
-            <IconContext.Provider value={{ size: "2em" }}>
+            {/* <IconContext.Provider value={{ size: "2em" }}>
               {" "}
               <button className="editProfile">
                 {" "}
                 <MdEdit />
                 <p className="button-text"> Edit Profile </p>
               </button>{" "}
-            </IconContext.Provider>
+            </IconContext.Provider> */}
           </div>
           <div className="profile-bottom">
             <div className="left-part">
