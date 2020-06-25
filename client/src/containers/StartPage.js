@@ -72,10 +72,9 @@ export default function StartPage(props) {
         .get(`http://localhost:9090/chats/chat/${user.user_id}`)
         .catch((error) => console.log(error.response.data));
       console.log(res);
-      setChat(res.data.chat);
-      setLoading(false);
+      // setChat(res.data.chat);
 
-      return res.data.chat;
+      console.log(res.data.chat);
     };
 
     getChat();

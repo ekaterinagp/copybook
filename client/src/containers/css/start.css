@@ -471,7 +471,7 @@ div.main-middle .feel {
 
 .on-profile {
   margin-top: 10rem;
-  margin-left: 69rem;
+  margin-left: 54rem;
   width: 10rem;
   height: 10rem;
   border: 3px solid white;
@@ -504,7 +504,8 @@ div.main-middle .feel {
   border: 1px solid rgba(0, 0, 0, 0.3);
   position: absolute;
   width: 300px;
-  grid-template-rows: 1fr 3fr 1fr;
+  /* grid-template-rows: auto 1fr auto; */
+  grid-template-rows: 70px 290px 40px;
   height: 400px;
   bottom: 0;
   z-index: 10;
@@ -516,10 +517,10 @@ div.main-middle .feel {
   display: grid;
   grid-template-columns: 0.5fr 2fr;
   padding: 10px;
-  position: fixed;
+  /* position: fixed; */
   font-size: 1rem;
   color: #555;
-  width: 16%;
+  /* width: 16%; */
   background: white;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
 }
@@ -562,11 +563,13 @@ div.main-middle .feel {
 } */
 
 .styled-list {
-  padding-top: 22rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  /* padding-top: 22rem;
   display: grid;
   grid-gap: 1rem;
-  /* max-height: 288px; */
-  overflow-y: scroll;
+  overflow-y: scroll; */
 }
 
 .edit-intro:hover {
@@ -575,11 +578,17 @@ div.main-middle .feel {
 }
 
 .chat-lines {
+  margin: 5px;
   display: flex;
 }
 
-.styled-list div:nth-child(2n + 1) {
-  float: right;
+.styled-list div:nth-child(even) {
+  flex-direction: row-reverse;
+  margin-left: auto;
+}
+
+.styled-list div:nth-child(odd) {
+  margin-right: auto;
 }
 
 .logout-div {

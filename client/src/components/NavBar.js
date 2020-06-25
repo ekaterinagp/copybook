@@ -29,8 +29,8 @@ import "./navbar.css";
 
 export default function NavBar(props) {
   const history = useHistory();
-  const [notifications, setNotifications] = useState(3);
-  const [messages, setMessages] = useState(1);
+  const [notifications, setNotifications] = useState();
+  const [messages, setMessages] = useState();
   const [logoutVisible, setLogoutVisible] = useState(false);
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -153,13 +153,15 @@ export default function NavBar(props) {
 
             <div>
               <div className="messages">{messageIcon()}</div>
-              <div className="chat-counter">{messages ? messages : null}</div>
+              {/* <div className="chat-counter">
+                {messages > 1 ? messages : null}
+              </div> */}
             </div>
             <div>
               <div className="notification">{notificationIcon()}</div>
-              <div className="notification-counter">
-                {notifications ? notifications : null}
-              </div>
+              {/* <div className="notification-counter">
+                {notifications > 1 ? notifications : null}
+              </div> */}
             </div>
           </div>
         ) : (

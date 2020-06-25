@@ -1,38 +1,16 @@
-import React, { useReducer, useState, useEffect } from "react";
+import React, { useReducer, useState, useEffect, createContext } from "react";
 import io from "socket.io-client";
 import axios from "axios";
 
-export const CTX = React.createContext();
+export const CTX = createContext();
 
-const initialState = [
-  {
-    from: "Benjamin",
-    msg: "Hello",
-  },
-  {
-    from: "Catty",
-    msg: "Hi",
-  },
-  {
-    from: "Benjamin",
-    msg: "How are you?",
-  },
-  {
-    from: "Catty",
-    msg: "Okaaay",
-  },
-  {
-    from: "Benjamin",
-    msg: "All good",
-  },
-  {
-    from: "Catty",
-    msg: "Nice",
-  },
-  {
-    from: "Benjamin",
-    msg: "Yes!",
-  },
+let initialState = [
+  { from: "Benjamin", msg: "Hello!" },
+  { from: "Catty", msg: "Hi!" },
+  { from: "Benjamin", msg: "How are you!" },
+  { from: "Catty", msg: "Better! you?" },
+  { from: "Benjamin", msg: "okay!" },
+  { from: "Catty", msg: "Wanna go out?" },
 ];
 
 function reducer(state, action) {
@@ -65,24 +43,17 @@ function sendChatAction(value) {
 }
 
 export default function Store(props) {
-  const [allChats, dispatch] = useReducer(reducer, initialState);
-
   if (!socket) {
     socket = io(":9090");
     socket.on("chat message", function (payload) {
       console.log("user connected");
-
+      console.log(payload);
       initialState.push({
         from: payload.from,
 
         msg: payload.msg,
       });
-      // setInitialState({
-      //   ...initialState,
-      //   from: payload.from,
 
-      //   msg: payload.msg,
-      // });
       console.log(initialState);
 
       // dispatch({ type: "RECIEVE_MESSAGE", payload: payload });
@@ -92,7 +63,13 @@ export default function Store(props) {
   const user = props.user.firstName;
 
   return (
-    <CTX.Provider value={{ allChats, sendChatAction, user }}>
+    <CTX.Provider
+      value={{
+        allChats: initialState,
+        sendChatAction,
+        user,
+      }}
+    >
       {props.children}
     </CTX.Provider>
   );

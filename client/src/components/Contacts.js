@@ -21,11 +21,9 @@ export default function Contacts(props) {
       });
       setContacts(contacts);
     }
-  }, []);
+  }, [allChats]);
 
   const [textValue, setTextValue] = useState("");
-
-  ///////
 
   const addChatOpen = (contacts) => {
     contacts.forEach((contact) => {
@@ -42,6 +40,9 @@ export default function Contacts(props) {
   }, []);
 
   const handleKeyClick = (e) => {
+    if (!textValue) {
+      return;
+    }
     console.log(e.key, e.code);
     if (e.key == "Enter") {
       sendChatAction({
