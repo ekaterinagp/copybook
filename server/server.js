@@ -16,6 +16,9 @@ io.on("connection", function (socket) {
     console.log("message :" + JSON.stringify(msg));
     io.emit("chat message", msg);
   });
+  socket.on("disconnect", function () {
+    console.log(socket.id); // retrieve it from socket object
+  });
 });
 
 ////////////////////////////
@@ -53,12 +56,13 @@ const postRoutes = require("./routes/posts/posts.js");
 const userRoutes = require("./routes/users/users.js");
 const groupsRoutes = require("./routes/groups/groups.js");
 const watchRoutes = require("./routes/watch/watch.js");
-
+const chatRoutes = require("./routes/chats/chats.js");
 // app.post("/posts", postRoutes);
 app.use("/posts", postRoutes);
 app.use("/users", userRoutes);
 app.use("/groups", groupsRoutes);
 app.use("/watch", watchRoutes);
+app.use("/chats", chatRoutes);
 
 // app.listen(port, (err) => {
 //   if (err) {

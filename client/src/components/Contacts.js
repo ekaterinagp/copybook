@@ -22,6 +22,15 @@ export default function Contacts(props) {
 
   console.log({ allChats });
 
+  useEffect(() => {
+    if (allChats) {
+      contacts.forEach((contact) => {
+        contact.active = true;
+      });
+      setContacts(contacts);
+    }
+  }, []);
+
   // const topics = Object.keys(allChats);
   const [textValue, setTextValue] = useState("");
 

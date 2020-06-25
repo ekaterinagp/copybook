@@ -567,6 +567,11 @@ div.main-middle .feel {
   max-height: 250px;
 }
 
+.edit-intro:hover {
+  background-color: grey;
+  color: white;
+}
+
 .chat-lines {
   display: flex;
 }

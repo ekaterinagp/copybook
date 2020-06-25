@@ -46,6 +46,7 @@ export default function Store(props) {
   if (!socket) {
     socket = io(":9090");
     socket.on("chat message", function (payload) {
+      console.log("user connected");
       initialState.push({
         from: payload.from,
 
@@ -57,7 +58,7 @@ export default function Store(props) {
     });
   }
 
-  const user = "Kat" + Math.random(100).toFixed(2);
+  const user = props.user.firstName;
 
   return (
     <CTX.Provider value={{ allChats, sendChatAction, user }}>

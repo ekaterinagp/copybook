@@ -165,7 +165,12 @@ export default function StartPage(props) {
                   <h4>
                     {person.firstName} {person.lastName}
                   </h4>
-                  <button onClick={() => addFriend(person)}>Add friend</button>
+                  <button
+                    onClick={() => addFriend(person)}
+                    className="edit-intro"
+                  >
+                    Add friend
+                  </button>
                 </div>
               ))
             ) : (
@@ -211,7 +216,7 @@ export default function StartPage(props) {
           </div>
           <div className="friends-activity">
             <h2>Contacts</h2>
-            <Store>
+            <Store user={user}>
               <Contacts user={user} />
             </Store>
           </div>
