@@ -31,18 +31,6 @@ export default function Modal(props) {
 
   const [disabled, setDisabled] = useState(true);
 
-  // const [post, setPost] = useState({
-  //   firstName: user.firstName,
-  //   lastName: user.lastName,
-  //   feeling: feeling,
-  //   user_img: user.user_img,
-  //   img: imageAsUrl.imgUrl,
-  //   text: "",
-  //   tag: [],
-  //   comments: [],
-  //   likes: [],
-  // });
-
   useEffect(() => {
     const getUser = async () => {
       setLoading(true);
@@ -128,7 +116,12 @@ export default function Modal(props) {
       post
     );
     console.log(res);
-    props.setUsersPosts();
+    const res1 = await axios
+      .get(`http://localhost:9090/posts/all`)
+      .catch((error) => console.log(error.response.data));
+    console.log(res1);
+    let postModified = res1.data.reverse();
+    props.setUsersPosts(postModified);
   };
 
   const addPost = async (e) => {

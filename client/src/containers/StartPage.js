@@ -185,7 +185,7 @@ export default function StartPage(props) {
                   </h4>
                   <button
                     onClick={() => addFriend(person)}
-                    className="edit-intro"
+                    className="edit-friend"
                   >
                     Add friend
                   </button>

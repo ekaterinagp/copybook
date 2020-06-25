@@ -91,7 +91,7 @@ export default function NavBar(props) {
             </Link>
           </IconContext.Provider>
           <div>
-            <form>
+            {/* <form>
               <div className="search-input">
                 {" "}
                 <input type="text" placeholder="Search Facebook" />
@@ -101,7 +101,7 @@ export default function NavBar(props) {
                   <MdSearch />
                 </IconContext.Provider>
               </div>
-            </form>
+            </form> */}
           </div>
         </div>
         <div className="middle">

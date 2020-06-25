@@ -8,14 +8,6 @@ export default function Contacts(props) {
   const [contacts, setContacts] = useState(props.user.friends);
   const [chatOpened, setChatOpened] = useState(false);
 
-  // const [response, setResponse] = useState("");
-  // const socket = socketIOClient(ENDPOINT);
-  // useEffect(() => {
-  //   socket.on("FromAPI", (data) => {
-  //     setResponse(data);
-  //   });
-  // }, []);
-
   ///socket
 
   const { allChats, sendChatAction, user } = React.useContext(CTX);
@@ -31,7 +23,6 @@ export default function Contacts(props) {
     }
   }, []);
 
-  // const topics = Object.keys(allChats);
   const [textValue, setTextValue] = useState("");
 
   ///////
@@ -94,8 +85,9 @@ export default function Contacts(props) {
             style={{
               display: contact.chatOpen ? "grid" : "none",
             }}
+            key={i + "dhdklg"}
           >
-            <div className="chat-top" key={i}>
+            <div className="chat-top" key={i} onClick={() => openChat(contact)}>
               <img className="mini" src={contact.user_img} />
               <h2>
                 {contact.firstName} {contact.lastName}

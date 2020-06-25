@@ -87,13 +87,13 @@ export default function Profile(props) {
                   <MdPhotoCamera />
                 </IconContext.Provider>
               </div>
-              <div className="button-change-cover">
+              {/* <div className="button-change-cover">
                 <IconContext.Provider value={{ size: "2em" }}>
                   <button>
                     <MdPhotoCamera /> <p>Edit Cover Photo</p>
                   </button>
                 </IconContext.Provider>
-              </div>
+              </div> */}
             </div>
 
             <h2 className="profile-name-full">

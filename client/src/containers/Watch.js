@@ -15,7 +15,7 @@ import Search from "../components/Search";
 import LikesComments from "../components/LikesComments";
 
 export default function Watch(props) {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(props.user);
   // const [loading, setLoading] = useState(false);
 
   const getUser = async () => {
@@ -49,7 +49,7 @@ export default function Watch(props) {
         "https://cdn.pixabay.com/photo/2016/07/18/20/33/elephant-1526709_960_720.jpg",
     },
   ]);
-  const [savedVideos, setSavedVideos] = useState(props.user.videos);
+  const [savedVideos, setSavedVideos] = useState(user.videos);
   const [loading, setLoading] = useState(true);
   const [popularVideos, setPopularVideos] = useState([]);
   const [searchedVideo, setSearchedVideo] = useState([]);
@@ -158,7 +158,7 @@ export default function Watch(props) {
         <div className="block-divider">
           <h3>Saved videos</h3>
           <div className="saved-videos">
-            {savedVideos ? (
+            {user && savedVideos ? (
               savedVideos.map((video, i) => (
                 <div className="saved-single-video" key={i}>
                   {/* <h3>{video.title}</h3> */}
@@ -243,9 +243,7 @@ export default function Watch(props) {
           </>
         )}
       </div>
-      <div className="watch-right">
-        <Contacts />
-      </div>
+      <div className="watch-right"></div>
     </div>
   );
 }

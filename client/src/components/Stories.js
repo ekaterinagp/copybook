@@ -27,6 +27,31 @@ export default function Stories() {
       text: "summer looks like autumn",
       created_at: "14-06-2020",
     },
+    {
+      id: 3,
+      user_id: 5,
+      firstName: "L",
+      lastName: "LL",
+      user_img:
+        "https://cdn.pixabay.com/photo/2016/11/29/09/32/concept-1868728_960_720.jpg",
+      story:
+        "https://cdn.pixabay.com/photo/2016/11/29/09/32/concept-1868728_960_720.jpg",
+      text: "work work work",
+      created_at: "14-06-2020",
+    },
+
+    {
+      id: 4,
+      user_id: 6,
+      firstName: "B",
+      lastName: "BB",
+      user_img:
+        "https://cdn.pixabay.com/photo/2015/10/12/14/59/girl-984060_960_720.jpg",
+      story:
+        "https://cdn.pixabay.com/photo/2016/02/23/02/55/juggler-1216853_960_720.jpg",
+      text: "fun fun fun",
+      created_at: "14-06-2020",
+    },
   ]);
   return (
     <div className="all-stories">

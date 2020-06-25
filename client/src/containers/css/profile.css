@@ -37,8 +37,8 @@
 
 .img-on-profile {
   position: absolute;
-  margin-top: 19rem;
-  margin-left: 69rem;
+  margin-top: 15rem;
+  margin-left: 54rem;
   width: 10rem;
   height: 10rem;
   border: 3px solid white;
@@ -48,11 +48,12 @@
 .profile-name-full {
   margin-top: 2rem;
   text-align: center;
+  padding-bottom: 10px;
 }
 
 .img-icon-profile svg {
   margin-top: 21rem;
-  margin-left: 77rem;
+  margin-left: 62rem;
   z-index: 100;
   background-color: white;
   border: 3px solid white;
@@ -125,6 +126,17 @@
   box-shadow: none;
   border: none;
   width: 90%;
+  padding: 10px;
+  background-color: #d8dadf;
+  margin: 10px 10px 0 20px;
+  font-size: large;
+  border-radius: 15px;
+}
+
+.edit-friend {
+  box-shadow: none;
+  border: none;
+
   padding: 10px;
   background-color: #d8dadf;
   margin: 10px 10px 0 20px;
