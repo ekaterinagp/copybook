@@ -17,7 +17,7 @@ io.on("connection", function (socket) {
     io.emit("chat message", msg);
   });
   socket.on("disconnect", function () {
-    console.log(socket.id); // retrieve it from socket object
+    console.log(socket); // retrieve it from socket object
   });
 });
 

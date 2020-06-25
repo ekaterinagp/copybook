@@ -561,10 +561,11 @@ div.main-middle .feel {
 } */
 
 .styled-list {
-  padding-top: 5rem;
+  padding-top: 22rem;
   display: grid;
   grid-gap: 1rem;
-  max-height: 250px;
+  /* max-height: 288px; */
+  overflow-y: scroll;
 }
 
 .edit-intro:hover {
@@ -578,4 +579,11 @@ div.main-middle .feel {
 
 .styled-list div:nth-child(2n + 1) {
   float: right;
+}
+
+.logout-div {
+  background-color: rgb(209, 200, 200);
+  padding: 10px;
+  position: absolute;
+  border-radius: 15px;
 }

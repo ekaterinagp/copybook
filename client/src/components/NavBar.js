@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import StartPage from "../containers/StartPage";
 import Watch from "../containers/Watch";
 import Marketplace from "../containers/Marketplace";
-
+import { useHistory } from "react-router-dom";
 import Profile from "../containers/Profile";
 import { Route, NavLink, Redirect, Link } from "react-router-dom";
 import { IconContext } from "react-icons";
@@ -28,65 +28,56 @@ import {
 import "./navbar.css";
 
 export default function NavBar(props) {
+  const history = useHistory();
   const [notifications, setNotifications] = useState(3);
   const [messages, setMessages] = useState(1);
-  // const [user, setUser] = useState();
-  // const [groups, setGroups] = useState();
-  // const [loading, setLoading] = useState(false);
+  const [logoutVisible, setLogoutVisible] = useState(false);
 
-  // const getUser = async () => {
-  //   setLoading(true);
-  //   let userId = localStorage.getItem("id");
-  //   const res = await axios
-  //     .get(`http://localhost:9090/users/${userId}`)
-  //     .catch((error) => console.log(error.response.data));
-  //   console.log(res);
-  //   setUser(res.data);
-  //   setLoading(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const token = localStorage.getItem("auth-token");
+
+  const showLogout = () => {
+    setLogoutVisible((logoutVisible) => !logoutVisible);
+  };
+
+  const checkUserLoggedIn = async () => {
+    if (token) {
+      const tokenRes = await axios.post(
+        "http://localhost:9090/users/tokenIsValid",
+
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        }
+      );
+      setLoggedIn(true);
+      // console.log(tokenRes);
+    } else {
+      setLoggedIn(false);
+      if (!loggedIn) {
+        return <Redirect to={FirstPage} />;
+      }
+    }
+  };
+
+  useEffect(() => {
+    checkUserLoggedIn();
+  }, []);
+
+  // const goOut = () => {
+  //   history.push(`/home`);
   // };
 
-  // const getGroups = async () => {
-  //   setLoading(true);
-  //   const res = await axios
-  //     .get(`http://localhost:9090/groups/all`)
-  //     .catch((error) => console.log(error.response.data));
-  //   console.log(res);
-  //   setGroups(res.data);
-  //   setLoading(false);
-  // };
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("id")) {
-  //     getUser();
-  //     getGroups();
-  //   }
-  // }, []);
-
-  // const [loggedIn, setLoggedIn] = useState(false);
-
-  // const token = localStorage.getItem("auth-token");
-
-  // const checkUserLoggedIn = async () => {
-  //   if (token) {
-  //     const tokenRes = await axios.post(
-  //       "http://localhost:9090/users/tokenIsValid",
-
-  //       {
-  //         headers: {
-  //           "x-auth-token": token,
-  //         },
-  //       }
-  //     );
-  //     setLoggedIn(true);
-  //     // console.log(tokenRes);
-  //   } else {
-  //     setLoggedIn(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   checkUserLoggedIn();
-  // }, []);
+  const logout = () => {
+    // localStorage.setItem("auth-token", "");
+    // localStorage.setItem("id", "");
+    localStorage.removeItem("id");
+    localStorage.removeItem("auth-token");
+    window.location.reload();
+    // goOut();
+  };
 
   return (
     <>
@@ -150,9 +141,14 @@ export default function NavBar(props) {
 
             <div className="profile-name">
               {props.user.firstName}
-              <div className="add">
+              <div className="add" onClick={showLogout}>
                 <AiOutlinePlusCircle />
               </div>
+              {logoutVisible ? (
+                <div className="logout-div" onClick={logout}>
+                  <h4>Logout</h4>
+                </div>
+              ) : null}
             </div>
 
             <div>

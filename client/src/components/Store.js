@@ -1,14 +1,38 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useEffect } from "react";
 import io from "socket.io-client";
+import axios from "axios";
 
 export const CTX = React.createContext();
 
 const initialState = [
-  { from: "Catty", msg: "Jello" },
-  { from: "Betty", msg: "Pello" },
-  { from: "Catty", msg: "Mello" },
-  { from: "Betty", msg: "Jello" },
-  { from: "Catty", msg: "Wello" },
+  {
+    from: "Benjamin",
+    msg: "Hello",
+  },
+  {
+    from: "Catty",
+    msg: "Hi",
+  },
+  {
+    from: "Benjamin",
+    msg: "How are you?",
+  },
+  {
+    from: "Catty",
+    msg: "Okaaay",
+  },
+  {
+    from: "Benjamin",
+    msg: "All good",
+  },
+  {
+    from: "Catty",
+    msg: "Nice",
+  },
+  {
+    from: "Benjamin",
+    msg: "Yes!",
+  },
 ];
 
 function reducer(state, action) {
@@ -52,9 +76,15 @@ export default function Store(props) {
 
         msg: payload.msg,
       });
+      // setInitialState({
+      //   ...initialState,
+      //   from: payload.from,
+
+      //   msg: payload.msg,
+      // });
       console.log(initialState);
 
-      dispatch({ type: "RECIEVE_MESSAGE", payload: payload });
+      // dispatch({ type: "RECIEVE_MESSAGE", payload: payload });
     });
   }
 

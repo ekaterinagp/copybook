@@ -25,6 +25,7 @@ export default function StartPage(props) {
   const [groups, setGroups] = useState(props.groups);
   const [usersPosts, setUsersPosts] = useState([]);
   const [people, setPeople] = useState();
+  const [chat, setChat] = useState();
 
   const [birthday, setBirthday] = useState([
     {
@@ -62,6 +63,23 @@ export default function StartPage(props) {
     setLoading(false);
     // getPosts();
   };
+
+  useEffect(() => {
+    const getChat = async () => {
+      // setLoading(true);
+
+      const res = await axios
+        .get(`http://localhost:9090/chats/chat/${user.user_id}`)
+        .catch((error) => console.log(error.response.data));
+      console.log(res);
+      setChat(res.data.chat);
+      setLoading(false);
+
+      return res.data.chat;
+    };
+
+    getChat();
+  }, []);
 
   useEffect(() => {
     const getPosts = async () => {
