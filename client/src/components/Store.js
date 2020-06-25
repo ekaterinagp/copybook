@@ -43,6 +43,7 @@ function sendChatAction(value) {
 }
 
 export default function Store(props) {
+  const [allchats, dispatch] = useReducer(reducer, initialState);
   if (!socket) {
     socket = io(":9090");
     socket.on("chat message", function (payload) {
@@ -57,6 +58,7 @@ export default function Store(props) {
       console.log(initialState);
 
       // dispatch({ type: "RECIEVE_MESSAGE", payload: payload });
+      console.log(initialState);
     });
   }
 

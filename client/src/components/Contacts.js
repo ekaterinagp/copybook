@@ -3,6 +3,7 @@ import axios from "axios";
 import socketIOClient from "socket.io-client";
 import Chip from "@material-ui/core/Chip";
 import { CTX } from "./Store";
+import Debouncer from "./Debouncer";
 
 export default function Contacts(props) {
   const [contacts, setContacts] = useState(props.user.friends);
@@ -15,6 +16,7 @@ export default function Contacts(props) {
   console.log({ allChats });
 
   useEffect(() => {
+    console.log(allChats);
     if (allChats) {
       contacts.forEach((contact) => {
         contact.active = true;
@@ -39,16 +41,21 @@ export default function Contacts(props) {
     }
   }, []);
 
+  const debouncer = new Debouncer();
+
   const handleKeyClick = (e) => {
-    if (!textValue) {
+    if (textValue == "") {
       return;
     }
     console.log(e.key, e.code);
     if (e.key == "Enter") {
-      sendChatAction({
-        from: user,
-        msg: textValue,
+      debouncer.call(1500, () => {
+        sendChatAction({
+          from: user,
+          msg: textValue,
+        });
       });
+
       setTextValue("");
     }
   };
@@ -104,13 +111,15 @@ export default function Contacts(props) {
                 </div>
               ))}
             </div>
-            <input
-              placeholder="Type here"
-              value={textValue}
-              onChange={(e) => setTextValue(e.target.value)}
-              className="chat-type"
-              onKeyDown={(e) => handleKeyClick(e)}
-            ></input>{" "}
+            <div>
+              <input
+                placeholder="Type here"
+                value={textValue}
+                onChange={(e) => setTextValue(e.target.value)}
+                className="chat-type"
+                onKeyDown={(e) => handleKeyClick(e)}
+              ></input>{" "}
+            </div>
           </div>
         </>
       ))}

@@ -526,8 +526,13 @@ div.main-middle .feel {
 }
 
 .chat-type {
-  position: absolute;
+  /* position: absolute; */
   bottom: 0;
+}
+
+.input-send {
+  display: grid;
+  grid-template-columns: auto auto;
 }
 
 .bottom-chat {
