@@ -71,6 +71,7 @@ export default function Store(props) {
     socket = io(":9090");
     socket.on("chat message", function (payload) {
       console.log("user connected");
+
       initialState.push({
         from: payload.from,
 

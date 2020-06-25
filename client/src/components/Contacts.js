@@ -42,7 +42,8 @@ export default function Contacts(props) {
   }, []);
 
   const handleKeyClick = (e) => {
-    if (e.key === "Enter") {
+    console.log(e.key, e.code);
+    if (e.key == "Enter") {
       sendChatAction({
         from: user,
         msg: textValue,
@@ -107,7 +108,7 @@ export default function Contacts(props) {
               value={textValue}
               onChange={(e) => setTextValue(e.target.value)}
               className="chat-type"
-              onKeyDown={handleKeyClick}
+              onKeyDown={(e) => handleKeyClick(e)}
             ></input>{" "}
           </div>
         </>

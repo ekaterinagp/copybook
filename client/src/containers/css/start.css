@@ -42,7 +42,7 @@
 }
 .main-middle {
   position: absolute;
-  top: 5rem;
+  top: 6rem;
   left: 25vw;
   width: 50vw;
   padding: 0 2rem;
@@ -587,4 +587,8 @@ div.main-middle .feel {
   padding: 10px;
   position: absolute;
   border-radius: 15px;
+}
+
+.birthday-block h2 {
+  padding-top: 1rem;
 }
