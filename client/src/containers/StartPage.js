@@ -13,6 +13,7 @@ import ModalPost from "../components/ModalPost";
 import Stories from "../components/Stories";
 import { Link, useHistory } from "react-router-dom";
 import FirstPage from "../containers/StartPage";
+import Store from "../components/Store";
 
 export default function StartPage(props) {
   console.log(props);
@@ -210,7 +211,9 @@ export default function StartPage(props) {
           </div>
           <div className="friends-activity">
             <h2>Contacts</h2>
-            <Contacts user={user} />
+            <Store>
+              <Contacts user={user} />
+            </Store>
           </div>
         </div>
       </div>

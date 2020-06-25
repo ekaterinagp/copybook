@@ -3,54 +3,20 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const config = require("config");
 const app = express();
-const server = require("http").createServer(app);
-const socketIo = require("socket.io");
-// const io = require("socket.io")(server, { origins: "http://localhost:3000" });
-// io.origins("*:*");
 
 const port = process.env.PORT || 9090;
 
-const io = socketIo(server); // < Interesting!
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
 
-let interval;
-
-io.on("connection", (socket) => {
-  console.log("New client connected");
-  // socket.emit("FromAPI", "New client connected");
-  // if (interval) {
-  //   clearInterval(interval);
-  // }
-  // interval = setInterval(() => getApiAndEmit(socket), 1000);
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-    // clearInterval(interval);
-  });
-  socket.on("chat", (msg) => {
-    socket.emit("FromAPI", msg);
+///////////////////////// socket
+io.on("connection", function (socket) {
+  console.log("a user connected");
+  socket.on("chat message", function (msg) {
+    console.log("message :" + JSON.stringify(msg));
+    io.emit("chat message", msg);
   });
 });
-
-////////////////////////////////// socket
-
-// const tech = io.of("/chat");
-
-// //io - server, socket - client events. namespases are joined by clients by sending a request to the server
-// tech.on("connection", (socket) => {
-//   socket.on("join", (data) => {
-//     socket.join(data.room);
-//     tech.in(data.room).emit("message", `new user joined ${data.room} room`);
-//   });
-//   socket.on("message", (data) => {
-//     console.log(`message: ${data.msg}`);
-//     tech.in(data.room).emit("message", data.msg);
-//   });
-
-//   socket.on("disconnect", () => {
-//     console.log("user disconnected");
-
-//     tech.emit("message", "user disconnected");
-//   });
-// });
 
 ////////////////////////////
 
@@ -87,13 +53,12 @@ const postRoutes = require("./routes/posts/posts.js");
 const userRoutes = require("./routes/users/users.js");
 const groupsRoutes = require("./routes/groups/groups.js");
 const watchRoutes = require("./routes/watch/watch.js");
-const chatRoutes = require("./routes/chats/chats.js");
+
 // app.post("/posts", postRoutes);
 app.use("/posts", postRoutes);
 app.use("/users", userRoutes);
 app.use("/groups", groupsRoutes);
 app.use("/watch", watchRoutes);
-app.use("/chats", chatRoutes);
 
 // app.listen(port, (err) => {
 //   if (err) {
@@ -103,4 +68,4 @@ app.use("/chats", chatRoutes);
 //   console.log(`server is listening to port ${port}`);
 // });
 
-server.listen(port, () => console.log(`Listening on port ${port}`));
+server.listen(port, () => console.log(`Listening happily on port ${port}`));

@@ -1,39 +1,31 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://127.0.0.1:9090";
+import Chip from "@material-ui/core/Chip";
+import { CTX } from "./Store";
 
 export default function Contacts(props) {
   const [contacts, setContacts] = useState(props.user.friends);
   const [chatOpened, setChatOpened] = useState(false);
 
-  const [response, setResponse] = useState("");
-  const socket = socketIOClient(ENDPOINT);
-  useEffect(() => {
-    socket.on("FromAPI", (data) => {
-      setResponse(data);
-    });
-  }, []);
+  // const [response, setResponse] = useState("");
+  // const socket = socketIOClient(ENDPOINT);
+  // useEffect(() => {
+  //   socket.on("FromAPI", (data) => {
+  //     setResponse(data);
+  //   });
+  // }, []);
 
-  // const sendChatMsg = (e) => {
-  //   console.log(e.target.value);
-  //   setTimeout(() => {
-  //     socket.emit("chat", "e.target.value");
-  //   }, 500);
-  // };
-  // const sendChatMsg = (e) => {
-  //   setTimeout(() => {
-  //     console.log("honey bunny 2");
+  ///socket
 
-  //     socket.emit("chat", "honey bunny 2");
-  //   }, 5000);
-  // };
+  const { allChats, sendChatAction, user } = React.useContext(CTX);
 
-  // setTimeout(() => {
-  //   console.log("honey bunny");
+  console.log({ allChats });
 
-  //   socket.emit("chat", "honey bunny");
-  // }, 5000);
+  // const topics = Object.keys(allChats);
+  const [textValue, setTextValue] = useState("");
+
+  ///////
 
   const addChatOpen = (contacts) => {
     contacts.forEach((contact) => {
@@ -48,6 +40,16 @@ export default function Contacts(props) {
       console.log(contacts);
     }
   }, []);
+
+  const handleKeyClick = (e) => {
+    if (e.key === "Enter") {
+      sendChatAction({
+        from: user,
+        msg: textValue,
+      });
+      setTextValue("");
+    }
+  };
 
   const openChat = (contact) => {
     console.log(contact);
@@ -81,7 +83,7 @@ export default function Contacts(props) {
           <div
             className="one-chat"
             style={{
-              display: contact.chatOpen ? "block" : "none",
+              display: contact.chatOpen ? "grid" : "none",
             }}
           >
             <div className="chat-top" key={i}>
@@ -90,9 +92,22 @@ export default function Contacts(props) {
                 {contact.firstName} {contact.lastName}
               </h2>
             </div>
-
-            <div>{response}</div>
-            <input placeholder="Type here" className="chat-type"></input>
+            <div className="styled-list">
+              {" "}
+              {allChats.map((chat, i) => (
+                <div className="chat-lines" key={i}>
+                  <Chip label={chat.from} />
+                  <div>{chat.msg}</div>
+                </div>
+              ))}
+            </div>
+            <input
+              placeholder="Type here"
+              value={textValue}
+              onChange={(e) => setTextValue(e.target.value)}
+              className="chat-type"
+              onKeyDown={handleKeyClick}
+            ></input>{" "}
           </div>
         </>
       ))}
