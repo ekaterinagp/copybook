@@ -10,14 +10,26 @@ const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
 ///////////////////////// socket
+const users = {};
+console.log(users);
 io.on("connection", function (socket) {
   console.log("a user connected");
+  socket.on("login", function (data) {
+    console.log("a user " + data.userId + " connected");
+    // saving userId to array with socket ID
+    users[socket.id] = data.userId;
+    io.emit("login", data.userId);
+  });
+
+  console.log(users);
   socket.on("chat message", function (msg) {
     console.log("message :" + JSON.stringify(msg));
     io.emit("chat message", msg);
   });
   socket.on("disconnect", function () {
-    // console.log(socket); // retrieve it from socket object
+    console.log("user " + users[socket.id] + " disconnected");
+    // remove saved socket from users object
+    delete users[socket.id];
   });
 });
 

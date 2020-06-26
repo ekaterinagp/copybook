@@ -13,6 +13,8 @@ let initialState = [
   { from: "Catty", msg: "Wanna go out?" },
 ];
 
+const connectedUsers = [];
+
 function reducer(state, action) {
   console.log(action);
   console.log(state);
@@ -43,15 +45,20 @@ function sendChatAction(value) {
 }
 
 export default function Store(props) {
-  const [allchats, dispatch] = useReducer(reducer, initialState);
+  // const [allchats, dispatch] = useReducer(reducer, initialState);
+
   if (!socket) {
     socket = io(":9090");
+    socket.emit("login", { userId: props.user.user_id });
+    socket.on("login", function (userId) {
+      console.log(userId);
+      connectedUsers.push(userId);
+    });
     socket.on("chat message", function (payload) {
-      console.log("user connected");
+      console.log("user send message");
       console.log(payload);
       initialState.push({
         from: payload.from,
-
         msg: payload.msg,
       });
 
@@ -70,6 +77,7 @@ export default function Store(props) {
         allChats: initialState,
         sendChatAction,
         user,
+        connectedUsers,
       }}
     >
       {props.children}

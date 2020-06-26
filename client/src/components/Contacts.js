@@ -9,21 +9,28 @@ export default function Contacts(props) {
   const [contacts, setContacts] = useState(props.user.friends);
   const [chatOpened, setChatOpened] = useState(false);
 
+  const { allChats, sendChatAction, user, connectedUsers } = React.useContext(
+    CTX
+  );
+  console.log({ allChats });
+  console.log({ connectedUsers });
+
   ///socket
 
-  const { allChats, sendChatAction, user } = React.useContext(CTX);
-
-  console.log({ allChats });
-
   useEffect(() => {
-    console.log(allChats);
-    if (allChats) {
-      contacts.forEach((contact) => {
-        contact.active = true;
-      });
-      setContacts(contacts);
-    }
-  }, [allChats]);
+    // console.log("use effect run");
+    // if (connectedUsers.length) {
+    //   const contactsId = contacts.map((one) => one.user_id);
+    //   let modified = connectedUsers
+    //     .filter((one) => one != user.user_id)
+    //     .filter((one) => contactsId.includes(one));
+    //   console.log({ modified });
+    // }
+    console.log({ contacts });
+    contacts[0].active = true;
+    contacts[1].active = true;
+    setContacts(contacts);
+  }, [connectedUsers]);
 
   const [textValue, setTextValue] = useState("");
 
@@ -49,14 +56,13 @@ export default function Contacts(props) {
     }
     console.log(e.key, e.code);
     if (e.key == "Enter") {
-      debouncer.call(1500, () => {
-        sendChatAction({
-          from: user,
-          msg: textValue,
-        });
+      sendChatAction({
+        from: user,
+        msg: textValue,
       });
-
-      setTextValue("");
+      setTimeout(() => {
+        setTextValue("");
+      }, 1000);
     }
   };
 
