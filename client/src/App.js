@@ -106,7 +106,9 @@ function App() {
 
         <Route
           path="/profile"
-          component={() => <Profile user={user} setUser={setUser} />}
+          component={() => (
+            <Profile user={user} setUser={setUser} getUser={getUser} />
+          )}
         />
         <Route exact path={`/post/:postId`} component={SinglePostMarket} />
         <Route
@@ -119,32 +121,10 @@ function App() {
         <Route
           exact
           path={`/friend/:friendId`}
-          component={() => <SingleFriend user={user} />}
+          component={() => <SingleFriend user={user} getUser={getUser} />}
         />
         <Redirect to="/home" />
       </div>
-      {/* <BrowserRouter>
-        <Switch>
-         
-        </Switch>
-      </BrowserRouter> */}
-      {/* <Switch>
-        <Route path="/home">
-          <StartPage />
-        </Route>
-        <Route path="/watch">
-          <Watch />
-        </Route>
-        <Route path="/marketplace">
-          <Marketplace />
-        </Route>
-        <Route path="/profile">
-          <Profile />
-        </Route>
-        <Route path="/">
-          <StartPage />
-        </Route>
-      </Switch> */}
     </div>
   );
 }

@@ -53,7 +53,7 @@ export default function SingleFriend(props) {
     const res = await axios
       .put(`http://localhost:9090/users/deletefriend/${id}`, data)
       .catch((error) => console.log(error.response.data));
-
+    props.getUser();
     history.push("/home");
   };
 
